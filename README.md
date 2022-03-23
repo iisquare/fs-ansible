@@ -4,16 +4,19 @@ ansible shell
 ## 使用说明
 
 ### 授权
-- 明文密码
-```
-cat /etc/ansible/hosts
-[host-pattern]
-<ip-host> ansible_ssh_user=<user> ansible_ssh_pass=<password>
-```
 - SSH密钥
 ```
 ssh-keygen -t rsa -b 2048 -N '' -f ~/.ssh/id_rsa
 ssh-copy-id -i ~/.ssh/id_rsa.pub <user>@<ip-host>
+```
+- 修改配置
+```
+vi /etc/ansible/ansible.cfg 
+host_key_checking = False
+```
+- 批量授权
+```
+ansible <host-pattern> -m authorized_key -a "user=root key='{{ lookup('file','/root/.ssh/id_rsa.pub')}}' path='/root/.ssh/authorized_keys' manage_dir=no exclusive=no state=<present,absent>" --ask-pass -c paramiko
 ```
 
 ### 基础
@@ -28,6 +31,11 @@ ansible <host-pattern> -m copy -a 'src=<file_path> dest=<file_path> owner=<user>
 ansible <host-pattern> -m fetch -a "src=<file_path> dest=<file_path> flat=yes" # 参数flat根据/后缀确定目录
 ansible <host-pattern> -m file -a "path=<file_path> owner=<user> group=<group> state=<directory,link> mode=0644 recurse=yes"
 ansible <host-pattern> -m service -a "name=<name> enabled=<yes,no> state=<stared,stoped,restarted,reloaded>"
+```
+- 检查测试
+```
+ansible-playbook --syntax-check xxx.yaml # 检测语法
+ansible-playbook -C xxx.yaml # 测试运行
 ```
 
 ### 标签

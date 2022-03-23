@@ -1,0 +1,10 @@
+- hosts: ssh
+  user: root
+  tasks:
+  - name: Set authorized key took from file
+    tags:
+      - ssh
+    authorized_key:
+      key: "{{ lookup('file','~/.ssh/id_rsa.pub')}}" # 本机公钥地址
+      user: root # 远程用户名
+      state: present
