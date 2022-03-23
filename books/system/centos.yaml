@@ -1,10 +1,18 @@
 - hosts: ssh
   user: root
   tasks:
-  - name: Set authorized key took from file
+  - name: set authorized key took from file
     tags:
-      - ssh
+    - ssh
     authorized_key:
       key: "{{ lookup('file','~/.ssh/id_rsa.pub')}}" # 本机公钥地址
       user: root # 远程用户名
       state: present
+  - name: change persist hostname
+    tags:
+    - hostname
+    raw: "echo {{hostname|quote}} > /etc/hostname"
+  - name: change volatile hostname
+    tags:
+    - hostname
+    shell: hostname {{hostname|quote}}

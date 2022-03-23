@@ -1,4 +1,4 @@
 [ssh]
-node101
-node102
-node103
+192.168.80.130 hostname=node101
+192.168.80.131 hostname=node102
+192.168.80.132 hostname=node103
