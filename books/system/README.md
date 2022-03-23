@@ -7,3 +7,7 @@
 ```
 ansible-playbook -i hosts --tags ssh books/system/centos.yaml --ask-pass -c paramiko
 ```
+- 修改主机名
+```
+ansible-playbook -i hosts --tags hostname books/system/centos.yaml
+```
