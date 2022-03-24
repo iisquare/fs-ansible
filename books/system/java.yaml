@@ -1,0 +1,26 @@
+- hosts: ssh
+  user: root
+  tasks:
+  - name: check sdk
+    tags: ['never', 'sdk']
+    shell: "java -version"
+    register: result
+    ignore_errors: True
+  - name: install sdk
+    tags: ['never', 'sdk']
+    unarchive:
+      copy: yes
+      src: ../../archives/jdk-8u202-linux-x64.tar.gz
+      dest: /opt/
+    when: result.rc != 0
+  - name: change sdk bashrc
+    tags: ['never', 'sdk']
+    blockinfile:
+      backup: yes
+      path: /etc/bashrc
+      block: |
+        export JAVA_HOME=/opt/jdk1.8.0_202
+        export JRE_HOME=$JAVA_HOME/jre
+        export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+        export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+    when: result.rc != 0

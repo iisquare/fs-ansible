@@ -2,23 +2,19 @@
   user: root
   tasks:
   - name: set authorized key took from file
-    tags:
-    - ssh
+    tags: ['never', 'ssh']
     authorized_key:
       key: "{{ lookup('file','~/.ssh/id_rsa.pub')}}" # 本机公钥地址
       user: root # 远程用户名
       state: present
   - name: change persist hostname
-    tags:
-    - hostname
+    tags: ['never', 'hostname']
     raw: "echo {{hostname|quote}} > /etc/hostname"
   - name: change volatile hostname
-    tags:
-    - hostname
+    tags: ['never', 'hostname']
     shell: hostname {{hostname|quote}}
   - name: stop firewalld
-    tags:
-    - firewalld
+    tags: ['never', 'firewalld']
     service:
       name: firewalld
       state: stopped
