@@ -1,20 +1,20 @@
 - hosts: ssh
   user: root
   tasks:
-  - name: check sdk
-    tags: ['never', 'sdk']
+  - name: check jdk
+    tags: ['never', 'jdk']
     shell: "java -version"
     register: result
     ignore_errors: True
-  - name: install sdk
-    tags: ['never', 'sdk']
+  - name: install jdk
+    tags: ['never', 'jdk']
     unarchive:
       copy: yes
       src: ../../archives/jdk-8u202-linux-x64.tar.gz
       dest: /opt/
     when: result.rc != 0
-  - name: change sdk bashrc
-    tags: ['never', 'sdk']
+  - name: change jdk bashrc
+    tags: ['never', 'jdk']
     blockinfile:
       backup: yes
       path: /etc/bashrc

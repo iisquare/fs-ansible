@@ -11,3 +11,11 @@ ansible-playbook -i hosts --tags ssh books/system/centos.yaml --ask-pass -c para
 ```
 ansible-playbook -i hosts --tags hostname books/system/centos.yaml
 ```
+- 安装pip
+```
+ansible-playbook -i hosts --tags pip books/system/centos.yaml
+```
+- pip install pexpect
+```
+ansible-playbook -i hosts --tags expect books/system/centos.yaml
+```

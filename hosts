@@ -2,3 +2,8 @@
 node101 hostname=node101
 node102 hostname=node102
 node103 hostname=node103
+
+[hadoop]
+node101
+node102
+node103

@@ -4,7 +4,7 @@
   - name: set authorized key took from file
     tags: ['never', 'ssh']
     authorized_key:
-      key: "{{ lookup('file','~/.ssh/id_rsa.pub')}}" # 本机公钥地址
+      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" # 本机公钥地址
       user: root # 远程用户名
       state: present
   - name: change persist hostname
@@ -19,3 +19,21 @@
       name: firewalld
       state: stopped
       enabled: no
+  - name: epel-release
+    tags: ['never', 'pip']
+    yum: name=epel-release state=present
+  - name: python-pip
+    tags: ['never', 'pip']
+    yum: name=python-pip state=present
+  - name: mkdir ~/.pip/
+    tags: ['never', 'pip']
+    file:
+      path: ~/.pip
+      state: directory
+  - name: sync pip.conf
+    tags: ['never', 'pip']
+    copy: "src=../../files/pip.conf dest=~/.pip/pip.conf"
+  - name: pip install pexpect
+    tags: ['never', 'expect']
+    pip:
+      name: pexpect
