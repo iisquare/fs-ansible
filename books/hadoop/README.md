@@ -55,3 +55,4 @@ cd /opt/hadoop-3.3.2
 
 ### 服务地址
 - dfs.namenode.http-address:9870
+- yarn.resourcemanager.webapp.address:8088
