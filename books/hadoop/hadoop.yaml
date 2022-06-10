@@ -1,5 +1,7 @@
 - hosts: hadoop
   user: root
+  vars:
+    hadoop_user: root
   tasks:
   - name: check hadoop
     tags: ['never', 'install']
@@ -21,4 +23,21 @@
       path: /etc/bashrc
       block: |
         export HADOOP_HOME=/opt/hadoop-3.3.2
+        export HDFS_NAMENODE_USER={{ hadoop_user }}
+        export HDFS_DATANODE_USER={{ hadoop_user }}
+        export HDFS_SECONDARYNAMENODE_USER={{ hadoop_user }}
+        export YARN_RESOURCEMANAGER_USER={{ hadoop_user }}
+        export YARN_NODEMANAGER_USER={{ hadoop_user }}
+        export HDFS_JOURNALNODE_USER={{ hadoop_user }}
+        export HDFS_ZKFC_USER={{ hadoop_user }}
     when: not work_dir.stat.exists
+  - name: config hadoop
+    tags: ['never', 'config']
+    template:
+      src: ./etc/{{ item }}
+      dest: /opt/hadoop-3.3.2/etc/hadoop/{{ item }}
+    with_items:
+    - workers
+    - core-site.xml
+    - hdfs-site.xml
+    - yarn-site.xml

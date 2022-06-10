@@ -12,6 +12,8 @@ node103
 fs_home=/root
 fs_data=/data/hadoop
 fs_cluster=fs-project
-fs_nn1=node101
-fs_nn2=node102
-fs_nn3=node103
+fs_yarn=fs-project-yarn
+fs_ha_1=node101
+fs_ha_2=node102
+fs_ha_3=node103
+fs_zk_quorum=wsl:2181

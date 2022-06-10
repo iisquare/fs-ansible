@@ -27,38 +27,37 @@
     <name>dfs.datanode.data.dir</name>
     <value>file://{{ fs_data }}/datanode</value>
   </property>
-  <!-- 根据playbook生成节点列表 -->
   <property>
     <name>dfs.ha.namenodes.{{ fs_cluster }}</name>
-    <value>{{ play_hosts| join(',') }}</value>
+    <value>nn1,nn2,nn3</value>
   </property>
   <property>
     <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn1</name>
-    <value>{{ fs_nn1 }}:9000</value>
+    <value>{{ fs_ha_1 }}:9000</value>
   </property>
   <property>
     <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn2</name>
-    <value>{{ fs_nn2 }}:9000</value>
+    <value>{{ fs_ha_2 }}:9000</value>
   </property>
   <property>
     <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn3</name>
-    <value>{{ fs_nn3 }}:9000</value>
+    <value>{{ fs_ha_3 }}:9000</value>
   </property>  
   <property>
     <name>dfs.namenode.http-address.{{ fs_cluster }}.nn1</name>
-    <value>{{ fs_nn1 }}:9870</value>
+    <value>{{ fs_ha_1 }}:9870</value>
   </property>   
   <property>
     <name>dfs.namenode.http-address.{{ fs_cluster }}.nn2</name>
-    <value>{{ fs_nn2 }}:9870</value>
+    <value>{{ fs_ha_2 }}:9870</value>
   </property>
   <property>
     <name>dfs.namenode.http-address.{{ fs_cluster }}.nn3</name>
-    <value>{{ fs_nn3 }}:9870</value>
+    <value>{{ fs_ha_3 }}:9870</value>
   </property>   
   <property>
     <name>dfs.namenode.shared.edits.dir</name>
-    <value>qjournal://{{ fs_nn1 }}:8485;{{ fs_nn2 }}:8485;{{ fs_nn3 }}:8485/{{ fs_cluster }}</value>
+    <value>qjournal://{{ fs_ha_1 }}:8485;{{ fs_ha_2 }}:8485;{{ fs_ha_3 }}:8485/{{ fs_cluster }}</value>
   </property>
   <!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 -->
   <property>
@@ -74,5 +73,11 @@
   <property>
     <name>dfs.client.failover.proxy.provider.{{ fs_cluster }}</name>
     <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+
+  <!-- HA Config -->
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
   </property>
 </configuration>

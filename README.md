@@ -22,6 +22,8 @@ ansible <host-pattern> -m authorized_key -a "user=root key='{{ lookup('file','/r
 ### 基础
 - 常用模块
 ```
+ansible 127.0.0.1 -m debug -a "msg='{{ a }}'" --extra-vars "a=1 b=2" # KV
+ansible 127.0.0.1 -m debug -a "msg='{{ a }}'" --extra-vars '{a: 1}' # JSON
 ansible -i <inventory> --connection=<local,ssh> <host-pattern> -m ping
 ansible <host-pattern> -m ping
 ansible -i hosts all -m command -a "xxx"
