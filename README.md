@@ -37,6 +37,10 @@ ansible <host-pattern> -m service -a "name=<name> enabled=<yes,no> state=<stared
 ansible-playbook --syntax-check xxx.yaml # 检测语法
 ansible-playbook -C xxx.yaml # 测试运行
 ```
+- 帮助文档
+```
+ansible-doc blockinfile
+```
 
 ### 标签
 

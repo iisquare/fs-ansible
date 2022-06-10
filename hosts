@@ -7,3 +7,11 @@ node103 hostname=node103
 node101
 node102
 node103
+
+[hadoop:vars]
+fs_home=/root
+fs_data=/data/hadoop
+fs_cluster=fs-project
+fs_nn1=node101
+fs_nn2=node102
+fs_nn3=node103

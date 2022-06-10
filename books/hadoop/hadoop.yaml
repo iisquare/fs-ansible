@@ -1,0 +1,24 @@
+- hosts: hadoop
+  user: root
+  tasks:
+  - name: check hadoop
+    tags: ['never', 'install']
+    stat:
+      path: /opt/hadoop-3.3.2
+    register: work_dir
+  - name: install hadoop
+    tags: ['never', 'install']
+    unarchive:
+      copy: yes
+      src: ../../archives/hadoop-3.3.2.tar.gz
+      dest: /opt/
+    when: not work_dir.stat.exists
+  - name: change hadoop bashrc
+    tags: ['never', 'install']
+    blockinfile:
+      backup: yes
+      marker: '# {mark} ANSIBLE BLOCK FOR HADOOP'
+      path: /etc/bashrc
+      block: |
+        export HADOOP_HOME=/opt/hadoop-3.3.2
+    when: not work_dir.stat.exists

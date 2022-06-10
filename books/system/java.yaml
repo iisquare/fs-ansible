@@ -17,6 +17,7 @@
     tags: ['never', 'jdk']
     blockinfile:
       backup: yes
+      marker: '# {mark} ANSIBLE BLOCK FOR JAVA'
       path: /etc/bashrc
       block: |
         export JAVA_HOME=/opt/jdk1.8.0_202

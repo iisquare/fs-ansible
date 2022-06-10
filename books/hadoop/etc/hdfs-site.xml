@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<configuration>
+  <property>
+    <name>dfs.nameservices</name>
+    <value>{{ fs_cluster }}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file://{{ fs_data }}/namenode</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file://{{ fs_data }}/datanode</value>
+  </property>
+  <!-- 根据playbook生成节点列表 -->
+  <property>
+    <name>dfs.ha.namenodes.{{ fs_cluster }}</name>
+    <value>{{ play_hosts| join(',') }}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn1</name>
+    <value>{{ fs_nn1 }}:9000</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn2</name>
+    <value>{{ fs_nn2 }}:9000</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn3</name>
+    <value>{{ fs_nn3 }}:9000</value>
+  </property>  
+  <property>
+    <name>dfs.namenode.http-address.{{ fs_cluster }}.nn1</name>
+    <value>{{ fs_nn1 }}:9870</value>
+  </property>   
+  <property>
+    <name>dfs.namenode.http-address.{{ fs_cluster }}.nn2</name>
+    <value>{{ fs_nn2 }}:9870</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.{{ fs_cluster }}.nn3</name>
+    <value>{{ fs_nn3 }}:9870</value>
+  </property>   
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://{{ fs_nn1 }}:8485;{{ fs_nn2 }}:8485;{{ fs_nn3 }}:8485/{{ fs_cluster }}</value>
+  </property>
+  <!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 -->
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>sshfence</value>
+  </property>   
+  <!-- 使用隔离机制时需要ssh无秘钥登录 -->
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>{{ fs_home }}/.ssh/id_rsa</value>
+  </property>   
+  <!-- 访问代理类：client用于确定哪个NameNode为Active -->
+  <property>
+    <name>dfs.client.failover.proxy.provider.{{ fs_cluster }}</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+</configuration>

@@ -8,3 +8,9 @@
 ansible-playbook -i hosts --tags ssh-keygen books/hadoop/env.yaml
 ansible-playbook -i hosts --tags ssh-copy-id books/hadoop/env.yaml
 ```
+
+### 使用说明
+- 安装
+```
+ansible-playbook -i hosts --tags install books/hadoop/hadoop.yaml
+```
