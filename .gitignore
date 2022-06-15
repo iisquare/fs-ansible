@@ -1,3 +1,4 @@
 /archives/*.gz
 /archives/*.tar
 /archives/*.zip
+/archives/*.tgz

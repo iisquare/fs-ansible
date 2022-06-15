@@ -1,0 +1,35 @@
+- hosts: hadoop
+  user: root
+  vars:
+    hadoop_user: root
+  tasks:
+  - name: check spark
+    tags: ['never', 'install']
+    stat:
+      path: /opt/spark-3.2.1-bin-hadoop3.2
+    register: work_dir
+  - name: install spark
+    tags: ['never', 'install']
+    unarchive:
+      copy: yes
+      src: ../../archives/spark-3.2.1-bin-hadoop3.2.tgz
+      dest: /opt/
+    when: not work_dir.stat.exists
+  - name: change spark bashrc
+    tags: ['never', 'install']
+    blockinfile:
+      backup: yes
+      marker: '# {mark} ANSIBLE BLOCK FOR SPARK'
+      path: /etc/bashrc
+      block: |
+        export SPARK_HOME=/opt/spark-3.2.1-bin-hadoop3.2
+    when: not work_dir.stat.exists
+  - name: config spark
+    tags: ['never', 'config']
+    template:
+      src: ./conf/{{ item }}
+      dest: /opt/spark-3.2.1-bin-hadoop3.2/conf/{{ item }}
+    with_items:
+    - workers
+    - spark-env.sh
+    - spark-defaults.conf
