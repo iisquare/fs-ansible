@@ -28,7 +28,7 @@
 # export JAVA_HOME=/usr/java/jdk1.8.0/
 
 # Extra Java CLASSPATH elements.  Optional.
-# export HBASE_CLASSPATH=
+export HBASE_CLASSPATH=/opt/hadoop-3.3.2/etc/hadoop/
 
 # The maximum amount of heap to use. Default is left to JVM default.
 # export HBASE_HEAPSIZE=1G
@@ -136,7 +136,7 @@ export HBASE_MANAGES_ZK=false
 
 # Tell HBase whether it should include Hadoop's lib when start up,
 # the default value is false,means that includes Hadoop's lib.
-# export HBASE_DISABLE_HADOOP_CLASSPATH_LOOKUP="true"
+export HBASE_DISABLE_HADOOP_CLASSPATH_LOOKUP="true"
 
 # Override text processing tools for use by these launch scripts.
 # export GREP="${GREP-grep}"

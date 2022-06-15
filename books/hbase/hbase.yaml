@@ -34,3 +34,21 @@
     - regionservers
     - backup-masters
     - hbase-site.xml
+  - name: fixed compatible rm slf4j-*
+    tags: ['never', 'fixed']
+    file:
+      path: /opt/hbase-2.4.12/lib/client-facing-thirdparty/{{ item }}
+      state: absent
+    with_items:
+    - slf4j-api-1.7.33.jar
+    - slf4j-reload4j-1.7.33.jar
+  - name: fixed compatible link hadoop
+    tags: ['never', 'fixed']
+    file:
+      src: /opt/hadoop-3.3.2/share/hadoop/common/lib/{{ item }}
+      dest: /opt/hbase-2.4.12/lib/client-facing-thirdparty/{{ item }}
+      force: yes
+      state: link
+    with_items:
+    - slf4j-api-1.7.30.jar
+    - slf4j-log4j12-1.7.30.jar

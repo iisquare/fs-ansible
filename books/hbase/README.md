@@ -11,6 +11,10 @@ ansible-playbook -i hosts --tags install books/hbase/hbase.yaml
 ```
 ansible-playbook -i hosts --tags config books/hbase/hbase.yaml
 ```
+- 兼容
+```
+ansible-playbook -i hosts --tags fixed books/hbase/hbase.yaml
+```
 - 手动启动
 ```
 /opt/hbase-2.4.12/bin/hbase-daemon.sh start master 
@@ -39,10 +43,27 @@ jps|grep "HMaster\|HRegionServer"|awk '{print $1}'|xargs kill -s TERM
 ```
 deleteall /hbase
 ```
-
+- 清理日志文件
+```
+rm -f /opt/hbase-2.4.12/logs/*
+```
 
 ### 服务地址
 - Web UI hbase.master.info.port:16010
+
+## 常见问题
+
+### Web UI 中没有HRegionServer列表
+- Hadoop安全模式
+```
+/opt/hadoop-3.3.2/bin/hadoop dfsadmin -safemode get
+/opt/hadoop-3.3.2/bin/hadoop dfsadmin -safemode leave
+```
+- 与Hadoop版本不兼容
+```
+# vi /opt/hbase-2.4.12/logs/hbase-root-master-node101.log
+java.lang.IllegalArgumentException: object is not an instance of declaring class
+```
 
 ## 参考
 - [HBase HA （完全分布式）高可用集群的搭建](https://blog.csdn.net/weixin_43311978/article/details/106181687)
