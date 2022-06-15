@@ -48,9 +48,8 @@ ansible-playbook -i hosts --tags config books/hadoop/hadoop.yaml
 ```
 - 管理
 ```
-cd /opt/hadoop-3.3.2
-./sbin/start-all.sh
-./sbin/stop-all.sh
+/opt/hadoop-3.3.2/sbin/start-all.sh
+/opt/hadoop-3.3.2/sbin/stop-all.sh
 ```
 
 ### 服务地址
