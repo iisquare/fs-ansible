@@ -1,0 +1,35 @@
+- hosts: hadoop
+  user: root
+  vars:
+    hadoop_user: root
+  tasks:
+  - name: check hbase
+    tags: ['never', 'install']
+    stat:
+      path: /opt/hbase-2.4.12
+    register: work_dir
+  - name: install hbase
+    tags: ['never', 'install']
+    unarchive:
+      copy: yes
+      src: ../../archives/hbase-2.4.12-bin.tar.gz
+      dest: /opt/
+    when: not work_dir.stat.exists
+  - name: change hbase bashrc
+    tags: ['never', 'install']
+    blockinfile:
+      backup: yes
+      marker: '# {mark} ANSIBLE BLOCK FOR HBASE'
+      path: /etc/bashrc
+      block: |
+        export HBASE_HOME=/opt/hbase-2.4.12
+    when: not work_dir.stat.exists
+  - name: config hbase
+    tags: ['never', 'config']
+    template:
+      src: ./conf/{{ item }}
+      dest: /opt/hbase-2.4.12/conf/{{ item }}
+    with_items:
+    - hbase-env.sh
+    - regionservers
+    - hbase-site.xml

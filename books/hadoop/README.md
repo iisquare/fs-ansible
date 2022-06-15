@@ -9,7 +9,7 @@ ansible-playbook -i hosts --tags ssh-keygen books/hadoop/env.yaml
 ansible-playbook -i hosts --tags ssh-copy-id books/hadoop/env.yaml
 ```
 
-### 使用说明
+### 安装配置
 - 安装
 ```
 ansible-playbook -i hosts --tags install books/hadoop/hadoop.yaml
@@ -56,3 +56,6 @@ cd /opt/hadoop-3.3.2
 ### 服务地址
 - dfs.namenode.http-address:9870
 - yarn.resourcemanager.webapp.address:8088
+
+## 参考
+-[大数据hadoop3.1.3——Hadoop HA高可用学习笔记（安装与配置）](https://blog.csdn.net/qq_42502354/article/details/105980277)

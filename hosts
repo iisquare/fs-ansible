@@ -17,3 +17,5 @@ fs_ha_1=node101
 fs_ha_2=node102
 fs_ha_3=node103
 fs_zk_quorum=wsl:2181
+
+fs_hbase_data=/data/hbase
