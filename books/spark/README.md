@@ -31,6 +31,19 @@ ansible-playbook -i hosts --tags config books/spark/spark.yaml
 - SPARK_MASTER_WEBUI_PORT:8080
 - spark.history.ui.port:18080
 
+## 开发测试
+- 备份原始Jar包
+```
+ansible-playbook -i hosts --tags backup books/spark/dev.yaml
+```
+- 拷贝本地Jar包
+```
+ansible-playbook -i hosts --tags copy books/spark/dev.yaml
+```
+- 同步本地Jar包
+```
+ansible-playbook -i hosts --tags sync books/spark/dev.yaml
+```
 
 ## 参考
 - [Spark HA集群搭建](https://cloud.tencent.com/developer/article/1336634)

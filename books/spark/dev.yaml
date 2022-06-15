@@ -1,0 +1,46 @@
+- hosts: hadoop
+  user: root
+  vars:
+    hadoop_user: root
+  vars_prompt:
+  - name: local_jars
+    prompt: local jars path
+    private: no
+  tasks:
+  - name: backup dir
+    tags: ['never', 'backup']
+    file:
+      path: /opt/spark-3.2.1-bin-hadoop3.2/back-jars
+      state: directory
+  - name: backup
+    tags: ['never', 'backup']
+    shell: "cp -R /opt/spark-3.2.1-bin-hadoop3.2/jars/* /opt/spark-3.2.1-bin-hadoop3.2/back-jars/"
+  
+  - name: check backup
+    tags: ['never', 'sync', 'copy']
+    stat:
+      path: /opt/spark-3.2.1-bin-hadoop3.2/back-jars
+    register: back_jars
+
+  - name: rm jars
+    tags: ['never', 'copy']
+    shell: "rm -rf /opt/spark-3.2.1-bin-hadoop3.2/jars/*"
+    when: back_jars.stat.exists
+  - name: copy backup jars
+    tags: ['never', 'copy']
+    shell: "cp -R /opt/spark-3.2.1-bin-hadoop3.2/back-jars/* /opt/spark-3.2.1-bin-hadoop3.2/jars/"
+    when: back_jars.stat.exists
+  - name: copy local jars
+    tags: ['never', 'copy']
+    copy:
+      src: "{{ local_jars }}"
+      dest: /opt/spark-3.2.1-bin-hadoop3.2/jars/
+    when: back_jars.stat.exists
+
+  - name: sync jars
+    tags: ['never', 'sync']
+    synchronize:
+      src: "{{ local_jars }}"
+      dest: /opt/spark-3.2.1-bin-hadoop3.2/jars/
+      checksum: true
+    when: back_jars.stat.exists
