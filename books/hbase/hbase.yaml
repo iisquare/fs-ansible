@@ -32,4 +32,5 @@
     with_items:
     - hbase-env.sh
     - regionservers
+    - backup-masters
     - hbase-site.xml
