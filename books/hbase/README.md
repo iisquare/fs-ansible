@@ -63,6 +63,10 @@ rm -f /opt/hbase-2.4.12/logs/*
 ```
 # vi /opt/hbase-2.4.12/logs/hbase-root-master-node101.log
 java.lang.IllegalArgumentException: object is not an instance of declaring class
+# 替换slf4j-*.jar
+# vi hbase-env.sh
+export HBASE_CLASSPATH=/opt/hadoop-3.3.2/etc/hadoop/
+export HBASE_DISABLE_HADOOP_CLASSPATH_LOOKUP="true"
 ```
 
 ## 参考
