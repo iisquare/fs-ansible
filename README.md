@@ -72,3 +72,4 @@ ansible-playbook --skip-tags untagged xxx.yaml
 
 ## 参考链接
 - [Ansible中文权威指南](http://ansible.com.cn/)
+- [Jinja2 中文手册](https://docs.pythontab.com/jinja/jinja2/)

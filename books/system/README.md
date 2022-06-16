@@ -19,3 +19,7 @@ ansible-playbook -i hosts --tags pip books/system/centos.yaml
 ```
 ansible-playbook -i hosts --tags expect books/system/centos.yaml
 ```
+- 安装rsync
+```
+ansible-playbook -i hosts --tags rsync books/system/centos.yaml
+```

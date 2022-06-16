@@ -17,5 +17,13 @@ fs_ha_1=node101
 fs_ha_2=node102
 fs_ha_3=node103
 fs_zk_quorum=wsl:2181
-
 fs_hbase_data=/data/hbase
+
+[presto]
+node101 coordinator=true worker=false
+node102 coordinator=false worker=true
+node103 coordinator=false worker=true
+
+[presto:vars]
+fs_environment=fs_project
+fs_discovery_host=node101
