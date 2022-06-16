@@ -35,11 +35,24 @@ ansible-playbook -i hosts --tags cli books/presto/presto.yaml
 - 使用
 ```
 /opt/presto-server-0.273/presto-cli --help
+/opt/presto-server-0.273/presto-cli --server http://node101:8000
 ```
 
 ### 服务地址
 - http-server.http.port:8000
 
+### 常用命令
+- 帮助
+```
+help;
+```
+- 数据源
+```
+show catalogs;
+use mysql.default;
+show schemas;
+show tables;
+```
 
 ## 参考
 - [Presto安装部署详细说明](https://blog.csdn.net/jsbylibo/article/details/107821214)
