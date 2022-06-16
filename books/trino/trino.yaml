@@ -1,0 +1,74 @@
+- hosts: trino
+  user: root
+  tasks:
+  - name: check trino
+    tags: ['never', 'install']
+    stat:
+      path: /opt/trino-server-386
+    register: work_dir
+
+  - name: install trino
+    tags: ['never', 'install']
+    unarchive:
+      copy: yes
+      src: ../../archives/trino-server-386.tar.gz
+      dest: /opt/
+    when: not work_dir.stat.exists
+
+  - name: make config dir
+    tags: ['never', 'config']
+    file:
+      path: /opt/trino-server-386/etc
+      state: directory
+
+  - name: config trino
+    tags: ['never', 'config']
+    template:
+      src: ./etc/{{ item }}
+      dest: /opt/trino-server-386/etc/{{ item }}
+    with_items:
+    - config.properties
+    - jvm.config
+    - log.properties
+    - node.properties
+
+  - name: sync catalog
+    tags: ['never', 'sync']
+    synchronize:
+      src: ./etc/catalog
+      dest: /opt/trino-server-386/etc/
+      delete: true
+      checksum: true
+
+  - name: install cli
+    tags: ['never', 'cli']
+    copy:
+      src: ../../archives/trino-cli-386-executable.jar
+      dest: /opt/trino-server-386/trino-cli
+      mode: "u=rx,g=rx,o=rx"
+
+  - name: clear data dir
+    tags: ['never', 'clear']
+    file:
+      path: /data/trino
+      state: absent
+
+  - name: check jdk
+    tags: ['never', 'jdk']
+    stat:
+      path: /opt/jdk-11.0.15.1
+    register: jdk_dir
+
+  - name: install jdk
+    tags: ['never', 'jdk']
+    unarchive:
+      copy: yes
+      src: ../../archives/jdk-11.0.15.1_linux-x64_bin.tar.gz
+      dest: /opt/
+    when: not jdk_dir.stat.exists
+  - name: copy launcher
+    tags: ['never', 'jdk']
+    copy:
+      src: ./bin/launcher
+      dest: /opt/trino-server-386/bin/launcher
+      mode: "u=rwx,g=rx,o=rx"
