@@ -60,6 +60,18 @@ show schemas;
 show tables;
 ```
 
+### Superset集成
+- 驱动
+```
+pip install sqlalchemy-trino
+```
+- 连接
+```
+trino://{username}:{password}@{hostname}:{port}/{catalog}
+trino://admin@node101:8000/phoenix
+```
+
+
 ## 参考
 - [Trino documentation](https://trino.io/docs/current/index.html)
 - [Presto安装部署详细说明](https://blog.csdn.net/jsbylibo/article/details/107821214)
