@@ -1,0 +1,46 @@
+- hosts: ssh
+  user: root
+  vars:
+    docker_version: 18.09.9
+  tasks:
+  - name: install yum-utils
+    tags: ['never', 'dependencies']
+    yum: name=yum-utils state=present
+
+  - name: install device-mapper-persistent-data
+    tags: ['never', 'dependencies']
+    yum: name=device-mapper-persistent-data state=present
+
+  - name: install lvm2
+    tags: ['never', 'dependencies']
+    yum: name=lvm2 state=present
+
+  - name: install docker-ce
+    tags: ['never', 'install']
+    yum: name=docker-ce-{{ docker_version }} state=present
+
+  - name: install containerd.io
+    tags: ['never', 'install']
+    yum: name=containerd.io state=present
+
+  - name: mkdir etc dir
+    tags: ['never', 'config']
+    file:
+      path: /etc/docker
+      state: directory
+
+  - name: config daemon.json
+    tags: ['never', 'config']
+    copy: "src=../../files/daemon.json dest=/etc/docker/daemon.json"
+
+  - name: daemon-reload and restart
+    tags: ['never', 'config']
+    systemd:
+      name: docker
+      enabled: yes
+      state: restarted
+      daemon_reload: yes
+
+  - name: install docker-compose
+    tags: ['never', 'compose']
+    yum: name=docker-compose state=present
