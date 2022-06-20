@@ -28,3 +28,21 @@ node103 coordinator=false worker=true
 [trino:vars]
 fs_environment=fs_project
 fs_discovery_host=node101
+
+
+[compose]
+node101
+node102
+node103
+node104
+
+[compose:vars]
+fs_work_dir=/opt/docker-service
+
+[etcd]
+192.168.80.130 hostname=node101
+192.168.80.131 hostname=node102
+192.168.80.132 hostname=node103
+
+[etcd:vars]
+fs_work_dir=/opt/docker-service

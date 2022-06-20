@@ -1,0 +1,64 @@
+- hosts: etcd
+  user: root
+  vars:
+    service_dir: "{{ fs_work_dir }}/service/etcd"
+  tasks:
+  - name: make service dir
+    tags: ['never', 'init']
+    file:
+      path: "{{ service_dir }}"
+      state: directory
+  
+  - name: sync ssl
+    tags: ['never', 'init']
+    synchronize:
+      src: ./ssl
+      dest: "{{ service_dir }}"
+      delete: true
+      checksum: true
+
+  - name: copy Dockerfile
+    tags: ['never', 'init']
+    copy:
+      src: ./Dockerfile
+      dest: "{{ service_dir }}/Dockerfile"
+
+  - name: change config
+    tags: ['never', 'init']
+    template:
+      src: ./{{ item }}
+      dest: "{{ service_dir }}/{{ item }}"
+    with_items:
+    - etcd.conf
+
+  - name: change env
+    tags: ['never', 'init']
+    blockinfile:
+      backup: yes
+      marker: '# {mark} SERVICE FOR ETCD'
+      path: "{{ fs_work_dir }}/.env"
+      block: |
+        ETCD_VERSION=3.5.4
+        ETCD_HTTP_PORT=2379
+        ETCD_PEER_PORT=2380
+
+  - name: change compose
+    tags: ['never', 'init']
+    blockinfile:
+      backup: yes
+      marker: '# {mark} SERVICE FOR ETCD'
+      path: "{{ fs_work_dir }}/docker-compose.yml"
+      block: |
+        # Do not modify manually
+          etcd:
+            build:
+              context: ./service/etcd
+              args:
+                - ETCD_VERSION=${ETCD_VERSION}
+            environment:
+              ETCD_CONF_FILE: /etc/etcd/etcd.conf
+            ports:
+              - "${BIND_ADDRESS}${BIND_COLON}${ETCD_HTTP_PORT}:2379"
+              - "${BIND_ADDRESS}${BIND_COLON}${ETCD_PEER_PORT}:2380"
+            volumes:
+              - ./service/etcd/etcd.conf:/etc/etcd/etcd.conf

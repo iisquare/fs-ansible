@@ -1,0 +1,32 @@
+- hosts: compose
+  user: root
+  tasks:
+  - name: install docker-compose
+    tags: ['never', 'install']
+    yum: name=docker-compose state=present
+
+  - name: make work dir
+    tags: ['never', 'init']
+    file:
+      path: "{{ fs_work_dir }}"
+      state: directory
+
+  - name: copy env file
+    tags: ['never', 'init']
+    copy:
+      src: ./.env
+      dest: "{{ fs_work_dir }}/.env"
+
+  - name: compose file
+    tags: ['never', 'init']
+    template:
+      src: ./{{ item }}
+      dest: "{{ fs_work_dir }}/{{ item }}"
+    with_items:
+    - docker-compose.yml
+
+  - name: remove work dir
+    tags: ['never', 'remove']
+    file:
+      path: "{{ fs_work_dir }}"
+      state: absent

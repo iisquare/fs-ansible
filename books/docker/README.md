@@ -20,21 +20,3 @@ ansible-playbook -i hosts --tags install books/docker/docker.yaml
 ```
 ansible-playbook -i hosts --tags config books/docker/docker.yaml
 ```
-- 安装DockerCompose
-```
-ansible-playbook -i hosts --tags compose books/docker/docker.yaml
-```
-
-### Docker Compose
-- 配置
-```
-ansible-playbook -i hosts --tags config books/docker/compose.yaml
-```
-- 同步
-```
-ansible-playbook -i hosts --tags sync books/docker/compose.yaml
-```
-- 全量
-```
-ansible-playbook -i hosts --tags config,sync books/docker/compose.yaml
-```

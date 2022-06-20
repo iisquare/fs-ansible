@@ -40,7 +40,3 @@
       enabled: yes
       state: restarted
       daemon_reload: yes
-
-  - name: install docker-compose
-    tags: ['never', 'compose']
-    yum: name=docker-compose state=present
