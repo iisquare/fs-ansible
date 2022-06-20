@@ -6,7 +6,7 @@
 
 - 进入证书目录
 ```
-cd compose/service/etcd/ssl/
+cd compose/service/etcd/conf/ssl/
 ```
 - 生成CA私钥和证书
 ```
@@ -42,6 +42,27 @@ ansible-playbook -i hosts --tags init compose/service/etcd/etcd.yaml
 ```
 ./sbin/docker-archive.sh -i bitnami/etcd -v 3.5.4 -u root -h node101,node102,node103
 ```
+- 重置清理
+```
+docker-compose stop etcd
+docker-compose rm -f etcd
+rm -rf /data/etcd/
+```
+
+### 常用命令
+- 集群状态
+```
+etcdctl cluster-health
+```
+- 查询成员
+```
+etcdctl member list
+```
+- 删除成员
+```
+etcdctl member remove a8266ecf031671f3
+```
+
 
 ## 参考
 - [搭建高可用Etcd集群 (TLS)](https://www.jianshu.com/p/d7e53895338f)
