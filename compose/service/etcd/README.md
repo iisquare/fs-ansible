@@ -38,7 +38,12 @@ openssl verify -CAfile ca.crt etcd.crt
 ```
 ansible-playbook -i hosts --tags init compose/service/etcd/etcd.yaml
 ```
+- 同步镜像
+```
+./sbin/docker-archive.sh -i bitnami/etcd -v 3.5.4 -u root -h node101,node102,node103
+```
 
 ## 参考
 - [搭建高可用Etcd集群 (TLS)](https://www.jianshu.com/p/d7e53895338f)
 - [搭建 etcd 集群](https://doczhcn.gitbook.io/etcd/index/index-1/clustering)
+- [etcd配置文件详解](https://www.cnblogs.com/linuxws/p/11194403.html)

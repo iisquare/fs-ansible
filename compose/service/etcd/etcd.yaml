@@ -31,21 +31,10 @@
     with_items:
     - etcd.conf
 
-  - name: change env
-    tags: ['never', 'init']
-    blockinfile:
-      backup: yes
-      marker: '# {mark} SERVICE FOR ETCD'
-      path: "{{ fs_work_dir }}/.env"
-      block: |
-        ETCD_VERSION=3.5.4
-        ETCD_HTTP_PORT=2379
-        ETCD_PEER_PORT=2380
-
   - name: change compose
     tags: ['never', 'init']
     blockinfile:
-      backup: yes
+      backup: no
       marker: '# {mark} SERVICE FOR ETCD'
       path: "{{ fs_work_dir }}/docker-compose.yml"
       block: |
@@ -57,6 +46,7 @@
                 - ETCD_VERSION=${ETCD_VERSION}
             environment:
               ETCD_CONF_FILE: /etc/etcd/etcd.conf
+              ETCD_ROOT_PASSWORD: ${ETCD_ROOT_PASSWORD}
             ports:
               - "${BIND_ADDRESS}${BIND_COLON}${ETCD_HTTP_PORT}:2379"
               - "${BIND_ADDRESS}${BIND_COLON}${ETCD_PEER_PORT}:2380"

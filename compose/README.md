@@ -16,3 +16,9 @@ ansible-playbook -i hosts --tags init compose/compose.yaml
 ```
 ansible-playbook -i hosts --tags remove compose/compose.yaml
 ```
+
+### 配置约定
+
+- 环境变量.env文件独立配置，不受托管
+- 编译脚本Dockerfile独立配置，不受托管
+- 所需服务docker-compose.yml由各service下的剧本生成
