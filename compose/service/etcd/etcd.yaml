@@ -46,7 +46,6 @@
       block: |
         # Do not modify manually
           etcd:
-            network_mode: host
             build:
               context: ./service/etcd
               args:
