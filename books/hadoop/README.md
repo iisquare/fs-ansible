@@ -21,30 +21,30 @@ ansible-playbook -i hosts --tags config books/hadoop/hadoop.yaml
 - 初始化
 ```
 # 所有节点启动journalnode
-./bin/hdfs --daemon start journalnode
+/opt/hadoop-3.3.2/bin/hdfs --daemon start journalnode
 
 # 在nn1上格式化
-./bin/hdfs namenode -format
-./bin/hdfs zkfc -formatZK
+/opt/hadoop-3.3.2/bin/hdfs namenode -format
+/opt/hadoop-3.3.2/bin/hdfs zkfc -formatZK
 
 # 在nn1上启动namenode
-./bin/hdfs --daemon start namenode
+/opt/hadoop-3.3.2/bin/hdfs --daemon start namenode
 
 # 在nn2和nn3上同步nn1的元数据信息
-./bin/hdfs namenode -bootstrapStandby
+/opt/hadoop-3.3.2/bin/hdfs namenode -bootstrapStandby
 
 # 在nn2和nn3上启动namenode
-./bin/hdfs --daemon start namenode
+/opt/hadoop-3.3.2/bin/hdfs --daemon start namenode
 
 # 所有节点启动数据节点
-./bin/hdfs --daemon start datanode
+/opt/hadoop-3.3.2/bin/hdfs --daemon start datanode
 
 # 检查状态
-./bin/hdfs haadmin -getServiceState nn1
-./bin/yarn rmadmin -getServiceState rm1
+/opt/hadoop-3.3.2/bin/hdfs haadmin -getServiceState nn1
+/opt/hadoop-3.3.2/bin/yarn rmadmin -getServiceState rm1
 
 # 切换状态
-./bin/hdfs haadmin -transitionToActive nn1
+/opt/hadoop-3.3.2/bin/hdfs haadmin -transitionToActive nn1
 ```
 - 管理
 ```

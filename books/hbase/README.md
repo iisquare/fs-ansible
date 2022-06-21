@@ -56,8 +56,8 @@ rm -f /opt/hbase-2.4.12/logs/*
 ### Web UI 中没有HRegionServer列表
 - Hadoop安全模式
 ```
-/opt/hadoop-3.3.2/bin/hadoop dfsadmin -safemode get
-/opt/hadoop-3.3.2/bin/hadoop dfsadmin -safemode leave
+/opt/hadoop-3.3.2/bin/hdfs dfsadmin -safemode get
+/opt/hadoop-3.3.2/bin/hdfs dfsadmin -safemode leave
 ```
 - 与Hadoop版本不兼容
 ```

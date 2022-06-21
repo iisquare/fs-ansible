@@ -70,6 +70,13 @@ COLUMN_ENCODED_BYTES = 0
 CREATE VIEW "my_hbase_table" ( k VARCHAR primary key, "v" UNSIGNED_LONG) default_column_family='a';
 ```
 
+## 常见问题
+
+### phoenix进不去sqlline.py,一直卡住(不报错)
+
+可能是hbase在zookeeper中的meta信息不一致导致的。
+
+
 ## 参考
 - [HBase 4、Phoenix安装和Squirrel安装](https://www.cnblogs.com/raphael5200/p/5260198.html)
 - [Phoenix 原理 以及 Phoenix在HBase中的应用](https://blog.csdn.net/zhangshenghang/article/details/98183514)

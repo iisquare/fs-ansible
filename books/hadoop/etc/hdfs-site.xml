@@ -80,4 +80,9 @@
     <name>dfs.ha.automatic-failover.enabled</name>
     <value>true</value>
   </property>
+
+  <property>
+    <name>hbase.regionserver.wal.codec</name>
+    <value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
+  </property>
 </configuration>
