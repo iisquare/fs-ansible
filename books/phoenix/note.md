@@ -8,7 +8,7 @@
 ```
 - 查看表结构
 ```
-!desc [table]
+!desc <table-name>
 ```
 - 测试表
 ```
@@ -29,4 +29,10 @@ create index if not exists  TIME_TEST_INDEX_XS on TIME_TEST (XS);
 drop index TIME_TEST_INDEX_NN on TIME_TEST;
 drop index TIME_TEST_INDEX_ND on TIME_TEST;
 drop index TIME_TEST_INDEX_NS on TIME_TEST;
+```
+- 查询测试
+```
+select * from TIME_TEST where XN > 1655819280000 and XN < 1655819290000 limit 10;
+select * from TIME_TEST where XD > TO_TIMESTAMP('2022-06-21 21:48:00.000') and XD < TO_TIMESTAMP('2022-06-21 21:48:10.000') limit 10;
+select * from TIME_TEST where XS > '2022-06-21 21:48:00' and XS < '2022-06-21 21:48:10' limit 10;
 ```
