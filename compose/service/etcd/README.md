@@ -40,7 +40,13 @@ ansible-playbook -i hosts --tags init compose/service/etcd/etcd.yaml
 ```
 - 同步镜像
 ```
-./sbin/docker-archive.sh -i bitnami/etcd -v 3.5.4 -u root -h node101,node102,node103
+./sbin/docker-archive.sh -i gcr.io/etcd-development/etcd -v 3.5.4 -u root -h node101,node102,node103
+```
+- 启动服务
+```
+docker-compose up -d etcd
+docker-compose logs etcd
+docker-compose exec etcd etcdctl member list
 ```
 - 重置清理
 ```
@@ -50,9 +56,9 @@ rm -rf /data/etcd/
 ```
 
 ### 常用命令
-- 集群状态
+- 健康状态
 ```
-etcdctl cluster-health
+etcdctl endpoint health
 ```
 - 查询成员
 ```

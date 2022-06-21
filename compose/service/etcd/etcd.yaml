@@ -55,7 +55,8 @@
             ports:
               - "${BIND_ADDRESS}${BIND_COLON}${ETCD_HTTP_PORT}:2379"
               - "${BIND_ADDRESS}${BIND_COLON}${ETCD_PEER_PORT}:2380"
+            entrypoint: ["/usr/local/bin/etcd", "--config-file=/etc/etcd/etcd.yaml"]
             volumes:
-              - ${DATA_DIR}/etcd/data:/bitnami/etcd/data
-              - ./service/etcd/conf/etcd.yaml:/opt/bitnami/etcd/conf/etcd.yaml
-              - {{ fs_work_dir }}/service/etcd/conf/ssl:/opt/bitnami/etcd/conf/ssl
+              - ${DATA_DIR}/etcd:/var/etcd
+              - ./service/etcd/conf/etcd.yaml:/etc/etcd/etcd.yaml
+              - {{ fs_work_dir }}/service/etcd/conf/ssl:/etc/etcd/ssl

@@ -1,5 +1,5 @@
 name: '{{ hostname }}'
-data-dir: /bitnami/etcd/data
+data-dir: /var/etcd
 initial-cluster: '{{ fs_initial_cluster }}'
 initial-cluster-state: 'new'
 initial-cluster-token: '{{ fs_cluster }}'
@@ -9,10 +9,10 @@ listen-peer-urls: 'http://0.0.0.0:2380'
 listen-client-urls: 'http://0.0.0.0:2379'
 
 client-cert-auth: 'true'
-cert-file: '/opt/bitnami/etcd/conf/ssl/etcd.crt'
-key-file: '/opt/bitnami/etcd/conf/ssl/etcd.key'
-trusted-ca-file: '/opt/bitnami/etcd/conf/ssl/ca.crt'
+cert-file: '/etc/etcd/ssl/etcd.crt'
+key-file: '/etc/etcd/ssl/etcd.key'
+trusted-ca-file: '/etc/etcd/ssl/ca.crt'
 peer-client-cert-auth: 'true'
-peer-cert-file: '/opt/bitnami/etcd/conf/ssl/etcd.crt'
-peer-key-file: '/opt/bitnami/etcd/conf/ssl/etcd.key'
-peer-trusted-ca-file: '/opt/bitnami/etcd/conf/ssl/ca.crt'
+peer-cert-file: '/etc/etcd/ssl/etcd.crt'
+peer-key-file: '/etc/etcd/ssl/etcd.key'
+peer-trusted-ca-file: '/etc/etcd/ssl/ca.crt'
