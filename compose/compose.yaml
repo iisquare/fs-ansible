@@ -12,7 +12,7 @@
       state: directory
 
   - name: copy env file
-    tags: ['never', 'init']
+    tags: ['never', 'init', 'env']
     copy:
       src: ./.env
       dest: "{{ fs_work_dir }}/.env"

@@ -16,6 +16,10 @@ ansible-playbook -i hosts --tags init compose/compose.yaml
 ```
 ansible-playbook -i hosts --tags remove compose/compose.yaml
 ```
+- 仅同步环境配置
+```
+ansible-playbook -i hosts --tags env compose/compose.yaml
+```
 
 ### 配置约定
 

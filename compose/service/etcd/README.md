@@ -40,7 +40,7 @@ ansible-playbook -i hosts --tags init compose/service/etcd/etcd.yaml
 ```
 - 同步镜像
 ```
-./sbin/docker-archive.sh -i gcr.io/etcd-development/etcd -v 3.5.4 -u root -h node101,node102,node103
+./sbin/docker-archive.sh -i gcr.io/etcd-development/etcd -v v3.5.4 -u root -h node101,node102,node103
 ```
 - 启动服务
 ```
