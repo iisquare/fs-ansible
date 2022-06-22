@@ -32,8 +32,8 @@
               MINIO_ROOT_USER: ${MINIO_ROOT_USER}
               MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
             ports:
-              - "{{ inventory_hostname }}:${MINIO_HTTP_PORT}:9000"
-              - "{{ inventory_hostname }}:${MINIO_CONSOLE_PORT}:9001"
+              - "${BIND_ADDRESS}${BIND_COLON}${MINIO_HTTP_PORT}:9000"
+              - "${BIND_ADDRESS}${BIND_COLON}${MINIO_CONSOLE_PORT}:9001"
             command: server {{ fs_server_url }} --console-address ":9001"
             volumes:
               - ${DATA_DIR}/minio/export1:/export1
