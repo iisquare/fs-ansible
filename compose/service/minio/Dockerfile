@@ -1,5 +1,5 @@
 ARG MINIO_VERSION
 
-FROM minio/minio:${MINIO_VERSION}
+FROM quay.io/minio/minio:${MINIO_VERSION}
 
 EXPOSE 9000 9001

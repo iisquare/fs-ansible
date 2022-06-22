@@ -10,7 +10,7 @@ ansible-playbook -i hosts --tags init compose/service/minio/minio.yaml
 ```
 - 同步镜像
 ```
-./sbin/docker-archive.sh -i minio/minio -v RELEASE.2022-06-20T23-13-45Z -u root -h node101,node102,node103,node104
+./sbin/docker-archive.sh -i quay.io/minio/minio -v RELEASE.2022-06-20T23-13-45Z -u root -h node101,node102,node103,node104
 ```
 - 默认认证
 ```
@@ -19,7 +19,7 @@ minioadmin:minioadmin
 - 启动服务
 ```
 docker-compose up -d minio
-docker-compose logs minio
+docker-compose logs -f minio
 ```
 - 重置清理
 ```

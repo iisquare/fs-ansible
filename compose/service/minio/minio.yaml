@@ -24,6 +24,7 @@
       block: |
         # Do not modify manually
           minio:
+            # network_mode: host
             build:
               context: ./service/minio
               args:
