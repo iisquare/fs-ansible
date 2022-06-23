@@ -24,6 +24,7 @@
       block: |
         # Do not modify manually
           minio:
+            restart: "${RESTART}"
             network_mode: host
             build:
               context: ./service/minio

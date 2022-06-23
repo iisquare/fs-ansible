@@ -46,15 +46,14 @@
       block: |
         # Do not modify manually
           etcd:
+            restart: "${RESTART}"
+            network_mode: host
             build:
               context: ./service/etcd
               args:
                 - ETCD_VERSION=${ETCD_VERSION}
             environment:
               ETCD_ROOT_PASSWORD: ${ETCD_ROOT_PASSWORD}
-            ports:
-              - "${BIND_ADDRESS}${BIND_COLON}${ETCD_HTTP_PORT}:2379"
-              - "${BIND_ADDRESS}${BIND_COLON}${ETCD_PEER_PORT}:2380"
             entrypoint: ["/usr/local/bin/etcd", "--config-file=/etc/etcd/etcd.yaml"]
             volumes:
               - ${DATA_DIR}/etcd:/var/etcd
