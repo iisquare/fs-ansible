@@ -23,9 +23,14 @@ CREATE TABLE TIME_TEST (
   NS VARCHAR
   CONSTRAINT TIME_TEST_PK PRIMARY KEY (A)
 ) DEFAULT_COLUMN_FAMILY='SVC';
+
+create index if not exists  TIME_TEST_INDEX_A_XN on TIME_TEST (A, XN);
+create index if not exists  TIME_TEST_INDEX_XN_A on TIME_TEST (XN, A);
+
 create index if not exists  TIME_TEST_INDEX_XN on TIME_TEST (XN);
 create index if not exists  TIME_TEST_INDEX_XD on TIME_TEST (XD);
 create index if not exists  TIME_TEST_INDEX_XS on TIME_TEST (XS);
+
 drop index TIME_TEST_INDEX_NN on TIME_TEST;
 drop index TIME_TEST_INDEX_ND on TIME_TEST;
 drop index TIME_TEST_INDEX_NS on TIME_TEST;

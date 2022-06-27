@@ -27,6 +27,7 @@ ansible-playbook -i hosts --tags fixed books/hbase/hbase.yaml
 ```
 /opt/hbase-2.4.12/bin/start-hbase.sh
 /opt/hbase-2.4.12/bin/stop-hbase.sh
+/opt/hbase-2.4.12/bin/hbase shell
 ```
 
 ### 重置
