@@ -10,10 +10,10 @@ openssl rand -base64 756 > ./compose/service/mongo/etc/keyfile
 ```
 - 手动移除登录认证部分的配置
 ```
-security:
-  authorization: enabled
-  clusterAuthMode: keyFile
-  keyFile: /etc/mongo/keyfile
+# security:
+#  authorization: enabled
+#  clusterAuthMode: keyFile
+#  keyFile: /etc/mongo/keyfile
 ```
 
 - 初始化
@@ -61,9 +61,9 @@ rs.initiate(
   {
     _id: "fsShard1",
     members: [
-      { _id : 0, host : "node101:27011" },
-      { _id : 1, host : "node102:27011" },
-      { _id : 2, host : "node103:27011" }
+      { _id : 0, host : "node101:27011", priority: 2 },
+      { _id : 1, host : "node102:27011", priority: 1 },
+      { _id : 2, host : "node103:27011", priority: 1 }
     ]
   }
 )
@@ -81,9 +81,9 @@ rs.initiate(
   {
     _id: "fsShard2",
     members: [
-      { _id : 0, host : "node101:27012" },
-      { _id : 1, host : "node102:27012" },
-      { _id : 2, host : "node103:27012" }
+      { _id : 0, host : "node101:27012", priority: 1 },
+      { _id : 1, host : "node102:27012", priority: 2 },
+      { _id : 2, host : "node103:27012", priority: 1 }
     ]
   }
 )
@@ -101,9 +101,9 @@ rs.initiate(
   {
     _id: "fsShard3",
     members: [
-      { _id : 0, host : "node101:27013" },
-      { _id : 1, host : "node102:27013" },
-      { _id : 2, host : "node103:27013" }
+      { _id : 0, host : "node101:27013", priority: 1 },
+      { _id : 1, host : "node102:27013", priority: 1 },
+      { _id : 2, host : "node103:27013", priority: 2 }
     ]
   }
 )
@@ -247,6 +247,18 @@ rs.status()
 rs.stepDown()
 ```
 
+## 常见问题
+
+### 认证文件异常
+```
+Read security file failed, error opening file bad file
+Read security file failed, permissions on are too open
+```
+使用docker启动mongodb后，使用的用户是systemd-coredump，也就是999
+```
+RUN chmod 400 /etc/mongo/keyfile
+RUN chown 999 /etc/mongo/keyfile
+```
 
 ## 参考
 

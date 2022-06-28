@@ -20,5 +20,5 @@
                 - MONGO_VERSION=${MONGO_VERSION}
             command: mongod --config /etc/mongo/shardsvr.conf
             volumes:
-              - ${DATA_DIR}/mongo/db3:/data/db
-              - ./service/mongo/etc/shardsvr3.conf:/etc/mongo/shardsvr.conf
+              - ${DATA_DIR}/mongo/db2:/data/db
+              - ./service/mongo/etc/shardsvr2.conf:/etc/mongo/shardsvr.conf
