@@ -179,14 +179,17 @@ db.getCollection("tdata").count()
 ```
 - 查询单个分片的数量（主节点）
 ```
-docker-compose exec mongo-mongos mongo --host 127.0.0.1 --port 27011
+docker-compose exec mongo-mongos mongo --host node101 --port 27011
 use fs_test
 db.getCollection("tdata").count()
 ```
 
 ### 登录认证
-- 创建管理用户
+- 创建管理用户，每个分片副本集的主节点和路由服务的任意节点
 ```
+docker-compose exec mongo-mongos mongo --host node101 --port 27011
+docker-compose exec mongo-mongos mongo --host node102 --port 27012
+docker-compose exec mongo-mongos mongo --host node103 --port 27013
 docker-compose exec mongo-mongos mongo --host 127.0.0.1 --port 27017
 use admin
 db.createUser({
@@ -214,6 +217,11 @@ docker-compose restart mongo-configsvr
 docker-compose restart mongo-shardsvr1
 docker-compose restart mongo-shardsvr2
 docker-compose restart mongo-shardsvr3
+```
+- 登录测试
+```
+use admin
+db.auth("root", "admin888")
 ```
 
 
