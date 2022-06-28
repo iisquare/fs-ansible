@@ -1,0 +1,24 @@
+- hosts: mongo-shardsvr1
+  user: root
+  vars:
+    service_dir: "{{ fs_work_dir }}/service/mongo"
+  tasks:
+  - name: change compose
+    tags: ['never', 'init']
+    blockinfile:
+      backup: no
+      marker: '# {mark} SERVICE FOR MONGO SHARD SERVER DATA1'
+      path: "{{ fs_work_dir }}/docker-compose.yml"
+      block: |
+        # Do not modify manually
+          mongo-shardsvr1:
+            restart: "${RESTART}"
+            network_mode: host
+            build:
+              context: ./service/mongo
+              args:
+                - MONGO_VERSION=${MONGO_VERSION}
+            command: mongod --config /etc/mongo/shardsvr.yml
+            volumes:
+              - ${DATA_DIR}/mongo/db1:/data/db
+              - ./service/mongo/etc/shardsvr1.yml:/etc/mongo/shardsvr.yml

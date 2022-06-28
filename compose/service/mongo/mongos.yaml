@@ -1,0 +1,23 @@
+- hosts: mongo-mongos
+  user: root
+  vars:
+    service_dir: "{{ fs_work_dir }}/service/mongo"
+  tasks:
+  - name: change compose
+    tags: ['never', 'init']
+    blockinfile:
+      backup: no
+      marker: '# {mark} SERVICE FOR MONGO QUERY ROUTER'
+      path: "{{ fs_work_dir }}/docker-compose.yml"
+      block: |
+        # Do not modify manually
+          mongo-mongos:
+            restart: "${RESTART}"
+            network_mode: host
+            build:
+              context: ./service/mongo
+              args:
+                - MONGO_VERSION=${MONGO_VERSION}
+            command: mongos --config /etc/mongo/mongos.yml
+            volumes:
+              - ./service/mongo/etc/mongos.yml:/etc/mongo/mongos.yml

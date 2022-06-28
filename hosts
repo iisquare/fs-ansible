@@ -59,17 +59,34 @@ fs_work_dir=/opt/docker-service
 fs_server_url="http://node10{1...3}/export{1...4}"
 
 
-[mongo-shard-data]
+[mongo-configsvr]
 node101
 node102
 node103
 
-[mongo-config-server]
+[mongo-shardsvr1]
 node101
 node102
 node103
 
-[minio-query-router]
+[mongo-shardsvr2]
 node101
 node102
 node103
+
+[mongo-shardsvr3]
+node101
+node102
+node103
+
+[mongo-mongos]
+node101
+node102
+node103
+
+[mongo:children]
+mongo-configsvr
+mongo-shardsvr1
+mongo-shardsvr2
+mongo-shardsvr3
+mongo-mongos

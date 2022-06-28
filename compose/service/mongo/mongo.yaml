@@ -1,0 +1,34 @@
+- hosts: mongo
+  user: root
+  vars:
+    service_dir: "{{ fs_work_dir }}/service/mongo"
+  tasks:
+  - name: make service dir
+    tags: ['never', 'init']
+    file:
+      path: "{{ service_dir }}"
+      state: directory
+
+  - name: copy Dockerfile
+    tags: ['never', 'init']
+    copy:
+      src: ./Dockerfile
+      dest: "{{ service_dir }}/Dockerfile"
+
+  - name: make config dir
+    tags: ['never', 'config']
+    file:
+      path: "{{ service_dir }}/etc"
+      state: directory
+
+  - name: change config
+    tags: ['never', 'config']
+    template:
+      src: ./etc/{{ item }}
+      dest: "{{ service_dir }}/etc/{{ item }}"
+    with_items:
+    - configsvr.yml
+    - shardsvr1.yml
+    - shardsvr2.yml
+    - shardsvr3.yml
+    - mongos.yml

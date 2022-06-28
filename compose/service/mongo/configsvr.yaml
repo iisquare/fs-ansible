@@ -1,0 +1,24 @@
+- hosts: mongo-configsvr
+  user: root
+  vars:
+    service_dir: "{{ fs_work_dir }}/service/mongo"
+  tasks:
+  - name: change compose
+    tags: ['never', 'init']
+    blockinfile:
+      backup: no
+      marker: '# {mark} SERVICE FOR MONGO CONFIG SERVER'
+      path: "{{ fs_work_dir }}/docker-compose.yml"
+      block: |
+        # Do not modify manually
+          mongo-configsvr:
+            restart: "${RESTART}"
+            network_mode: host
+            build:
+              context: ./service/mongo
+              args:
+                - MONGO_VERSION=${MONGO_VERSION}
+            command: mongod --config /etc/mongo/configsvr.yml
+            volumes:
+              - ${DATA_DIR}/mongo/configdb:/data/configdb
+              - ./service/mongo/etc/configsvr.yml:/etc/mongo/configsvr.yml

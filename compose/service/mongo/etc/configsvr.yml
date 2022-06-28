@@ -1,0 +1,6 @@
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: fsConfig
+net:
+  port: 27019
