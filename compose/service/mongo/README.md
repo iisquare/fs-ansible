@@ -168,6 +168,37 @@ db.getCollection("tdata").count()
 ```
 
 
+## 最佳实践
+
+### 切换主节点
+
+- 若各节点的priority优先级一致，则默认执行rs.initiate(...)初始化的节点为主节点
+```
+rs.initiate(
+  {
+    _id: "fsShard",
+    members: [
+      { _id : 0, host : "node101:27018", priority: 2 },
+      { _id : 1, host : "node102:27018", priority: 1 },
+      { _id : 2, host : "node103:27018", arbiterOnly: true } # 该节点仅用于选举
+    ]
+  }
+)
+```
+- 配置优先级
+```
+rs.config()
+config = rs.config()
+config.members[1].priority = 3
+rs.reconfig(config)
+rs.status()
+```
+- 手动降级
+```
+rs.stepDown()
+```
+
+
 ## 参考
 
 - [高可用的MongoDB集群](https://www.jianshu.com/p/2825a66d6aed)
