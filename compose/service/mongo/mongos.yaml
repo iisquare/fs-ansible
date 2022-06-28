@@ -18,6 +18,6 @@
               context: ./service/mongo
               args:
                 - MONGO_VERSION=${MONGO_VERSION}
-            command: mongos --config /etc/mongo/mongos.yml
+            command: mongos --config /etc/mongo/mongos.conf
             volumes:
-              - ./service/mongo/etc/mongos.yml:/etc/mongo/mongos.yml
+              - ./service/mongo/etc/mongos.conf:/etc/mongo/mongos.conf

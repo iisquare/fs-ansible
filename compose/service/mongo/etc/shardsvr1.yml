@@ -1,6 +1,0 @@
-sharding:
-  clusterRole: shardsvr
-replication:
-  replSetName: fsShard1
-net:
-  port: 27011

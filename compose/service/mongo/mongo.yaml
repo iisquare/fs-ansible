@@ -9,17 +9,23 @@
       path: "{{ service_dir }}"
       state: directory
 
+  - name: make config dir
+    tags: ['never', 'init']
+    file:
+      path: "{{ service_dir }}/etc"
+      state: directory
+
+  - name: copy keyfile
+    tags: ['never', 'init']
+    copy:
+      src: ./etc/keyfile
+      dest: "{{ service_dir }}/etc/keyfile"
+
   - name: copy Dockerfile
     tags: ['never', 'init']
     copy:
       src: ./Dockerfile
       dest: "{{ service_dir }}/Dockerfile"
-
-  - name: make config dir
-    tags: ['never', 'config']
-    file:
-      path: "{{ service_dir }}/etc"
-      state: directory
 
   - name: change config
     tags: ['never', 'config']
@@ -27,8 +33,8 @@
       src: ./etc/{{ item }}
       dest: "{{ service_dir }}/etc/{{ item }}"
     with_items:
-    - configsvr.yml
-    - shardsvr1.yml
-    - shardsvr2.yml
-    - shardsvr3.yml
-    - mongos.yml
+    - configsvr.conf
+    - shardsvr1.conf
+    - shardsvr2.conf
+    - shardsvr3.conf
+    - mongos.conf

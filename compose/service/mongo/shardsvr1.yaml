@@ -18,7 +18,7 @@
               context: ./service/mongo
               args:
                 - MONGO_VERSION=${MONGO_VERSION}
-            command: mongod --config /etc/mongo/shardsvr.yml
+            command: mongod --config /etc/mongo/shardsvr.conf
             volumes:
-              - ${DATA_DIR}/mongo/db1:/data/db
-              - ./service/mongo/etc/shardsvr1.yml:/etc/mongo/shardsvr.yml
+              - ${DATA_DIR}/mongo/db3:/data/db
+              - ./service/mongo/etc/shardsvr3.conf:/etc/mongo/shardsvr.conf

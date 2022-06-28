@@ -4,6 +4,18 @@
 
 ### 安装配置
 
+- 创建keyfile认证文件
+```
+openssl rand -base64 756 > ./compose/service/mongo/etc/keyfile
+```
+- 手动移除登录认证部分的配置
+```
+security:
+  authorization: enabled
+  clusterAuthMode: keyFile
+  keyFile: /etc/mongo/keyfile
+```
+
 - 初始化
 ```
 ansible-playbook -i hosts --tags init compose/service/mongo/mongo.yaml
@@ -115,18 +127,23 @@ sh.status()
 ```
 docker-compose stop mongo-mongos
 docker-compose rm -f mongo-mongos
+docker-compose build mongo-mongos
 
 docker-compose stop mongo-configsvr
 docker-compose rm -f mongo-configsvr
+docker-compose build mongo-configsvr
 
 docker-compose stop mongo-shardsvr1
 docker-compose rm -f mongo-shardsvr1
+docker-compose build mongo-shardsvr1
 
 docker-compose stop mongo-shardsvr2
 docker-compose rm -f mongo-shardsvr2
+docker-compose build mongo-shardsvr2
 
 docker-compose stop mongo-shardsvr3
 docker-compose rm -f mongo-shardsvr3
+docker-compose build mongo-shardsvr3
 
 rm -rf /data/mongo/
 ```
@@ -165,6 +182,38 @@ db.getCollection("tdata").count()
 docker-compose exec mongo-mongos mongo --host 127.0.0.1 --port 27011
 use fs_test
 db.getCollection("tdata").count()
+```
+
+### 登录认证
+- 创建管理用户
+```
+docker-compose exec mongo-mongos mongo --host 127.0.0.1 --port 27017
+use admin
+db.createUser({
+  user: "root",
+  pwd: 'admin888',
+  roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+})
+db.grantRolesToUser("root", ["clusterAdmin"])
+```
+- 修改configsvr和shardsvr配置
+```
+security:
+  authorization: enabled
+  keyFile: /etc/mongo/keyfile
+```
+- 修改mongos配置
+```
+security:
+  keyFile: /etc/mongo/keyfile
+```
+- 重启集群
+```
+docker-compose restart mongo-mongos
+docker-compose restart mongo-configsvr
+docker-compose restart mongo-shardsvr1
+docker-compose restart mongo-shardsvr2
+docker-compose restart mongo-shardsvr3
 ```
 
 

@@ -18,7 +18,7 @@
               context: ./service/mongo
               args:
                 - MONGO_VERSION=${MONGO_VERSION}
-            command: mongod --config /etc/mongo/configsvr.yml
+            command: mongod --config /etc/mongo/configsvr.conf
             volumes:
               - ${DATA_DIR}/mongo/configdb:/data/configdb
-              - ./service/mongo/etc/configsvr.yml:/etc/mongo/configsvr.yml
+              - ./service/mongo/etc/configsvr.conf:/etc/mongo/configsvr.conf
