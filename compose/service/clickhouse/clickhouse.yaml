@@ -31,11 +31,16 @@
         # Do not modify manually
           clickhouse:
             restart: "${RESTART}"
+            privileged: true
             network_mode: host
             build:
               context: ./service/clickhouse
               args:
                 - CLICKHOUSE_VERSION=${CLICKHOUSE_VERSION}
+            ulimits:
+              nofile:
+                soft: 262144
+                hard: 262144
             environment:
               CLICKHOUSE_USER: ${CLICKHOUSE_USER}
               CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}

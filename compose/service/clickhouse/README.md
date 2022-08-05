@@ -107,6 +107,29 @@ ALTER TABLE fs_test UPDATE score = score * 10 WHERE 1=1;
 ```
 OPTIMIZE TABLE fs_test FINAL;
 ```
+- 查询
+```
+select * from fs_test;
+select id, name, score, time, _version from fs_test final where _sign=1;
+select id, name, score, time, max(_version) from fs_test group by id, name, score, time having _sign=1;
+```
+
+## 常见问题
+
+### 查询异常
+- 异常信息
+```
+Received exception from server (version 22.7.1):
+Code: 74. DB::Exception: Received from localhost:9000. DB::ErrnoException. DB::ErrnoException: Cannot read from file 34, errno: 1, strerror: Operation not permitted: (while reading column id): While executing MergeTreeInOrder. (CANNOT_READ_FROM_FILE_DESCRIPTOR)
+```
+- 问题原因[issue: #13726](https://github.com/ClickHouse/ClickHouse/issues/13726)
+```
+Docker cannot run any binaries with filesystem capabilities in unprivileged mode.
+```
+- 解决方法
+```
+privileged: true
+```
 
 ## 参考
 - [ClickHouse Docs](https://clickhouse.com/docs/en/intro)
