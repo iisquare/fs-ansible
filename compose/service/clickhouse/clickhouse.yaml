@@ -1,0 +1,55 @@
+- hosts: clickhouse
+  user: root
+  vars:
+    service_dir: "{{ fs_work_dir }}/service/clickhouse"
+  tasks:
+  - name: make service dir
+    tags: ['never', 'init']
+    file:
+      path: "{{ service_dir }}"
+      state: directory
+
+  - name: make config dir
+    tags: ['never', 'init']
+    file:
+      path: "{{ service_dir }}/etc"
+      state: directory
+
+  - name: copy Dockerfile
+    tags: ['never', 'init']
+    copy:
+      src: ./Dockerfile
+      dest: "{{ service_dir }}/Dockerfile"
+
+  - name: change compose
+    tags: ['never', 'init']
+    blockinfile:
+      backup: no
+      marker: '# {mark} SERVICE FOR CLICKHOUSE'
+      path: "{{ fs_work_dir }}/docker-compose.yml"
+      block: |
+        # Do not modify manually
+          clickhouse:
+            restart: "${RESTART}"
+            network_mode: host
+            build:
+              context: ./service/clickhouse
+              args:
+                - CLICKHOUSE_VERSION=${CLICKHOUSE_VERSION}
+            environment:
+              CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+              CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+              CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+            volumes:
+              - ${DATA_DIR}/clickhouse/data:/var/lib/clickhouse
+              - ${DATA_DIR}/clickhouse/logs:/val/log/clickhouse-server
+              - ./service/clickhouse/etc/config.xml:/etc/clickhouse-server/config.xml
+              - ./service/clickhouse/etc/metrika.xml:/etc/clickhouse-server/config.d/metrika.xml
+  - name: change config
+    tags: ['never', 'config']
+    template:
+      src: ./etc/{{ item }}
+      dest: "{{ service_dir }}/etc/{{ item }}"
+    with_items:
+    - config.xml
+    - metrika.xml

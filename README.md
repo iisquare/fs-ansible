@@ -24,6 +24,7 @@ ansible <host-pattern> -m authorized_key -a "user=root key='{{ lookup('file','/r
 ```
 ansible 127.0.0.1 -m debug -a "msg='{{ a }}'" --extra-vars "a=1 b=2" # KV
 ansible 127.0.0.1 -m debug -a "msg='{{ a }}'" --extra-vars '{a: 1}' # JSON
+ansible -i hosts clickhouse -m debug -a "msg='{{ fs_cluster }}'"
 ansible -i <inventory> --connection=<local,ssh> <host-pattern> -m ping
 ansible <host-pattern> -m ping
 ansible -i hosts all -m command -a "xxx"

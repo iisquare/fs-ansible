@@ -12,8 +12,8 @@ node103
 [hadoop:vars]
 fs_home=/root
 fs_data=/data/hadoop
-fs_cluster=fs-project
-fs_yarn=fs-project-yarn
+fs_cluster=fs_project
+fs_yarn=fs_project_yarn
 fs_ha_1=node101
 fs_ha_2=node102
 fs_ha_3=node103
@@ -44,7 +44,7 @@ fs_work_dir=/opt/docker-service
 192.168.80.132 hostname=node103
 
 [etcd:vars]
-fs_cluster=fs-project
+fs_cluster=fs_project
 fs_work_dir=/opt/docker-service
 fs_initial_cluster="node101=http://192.168.80.130:2380,node102=http://192.168.80.131:2380,node103=http://192.168.80.132:2380"
 
@@ -90,3 +90,13 @@ mongo-shardsvr1
 mongo-shardsvr2
 mongo-shardsvr3
 mongo-mongos
+
+
+[clickhouse]
+node101
+node102
+node103
+
+[clickhouse:vars]
+fs_cluster=fs_project
+fs_work_dir=/opt/docker-service
