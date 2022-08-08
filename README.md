@@ -71,6 +71,10 @@ ansible-playbook --tags untagged xxx.yaml
 ansible-playbook --skip-tags untagged xxx.yaml
 ```
 
+### 注意事项
+
+- 分组下的变量，会相互覆盖，相同名称的值需保持一致
+
 ## 参考链接
 - [Ansible中文权威指南](http://ansible.com.cn/)
 - [Jinja2 中文手册](https://docs.pythontab.com/jinja/jinja2/)

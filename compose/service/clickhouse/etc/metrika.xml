@@ -2,7 +2,7 @@
 <yandex>
     <remote_servers>
         <!-- 单分片多副本 -->
-        <{{ fs_cluster }}>
+        <{{ fs_db_cluster }}>
             <shard>
                 <internal_replication>true</internal_replication>
 {% for host in play_hosts %}
@@ -12,7 +12,7 @@
                 </replica>
 {% endfor %}
             </shard>
-        </{{ fs_cluster }}>
+        </{{ fs_db_cluster }}>
     </remote_servers>
 
     <zookeeper>
