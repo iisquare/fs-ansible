@@ -31,11 +31,11 @@
 export HBASE_CLASSPATH=/opt/hadoop-3.3.2/etc/hadoop/
 
 # The maximum amount of heap to use. Default is left to JVM default.
-# export HBASE_HEAPSIZE=1G
+export HBASE_HEAPSIZE=10G
 
 # Uncomment below if you intend to use off heap cache. For example, to allocate 8G of 
 # offheap, set the value to "8G".
-# export HBASE_OFFHEAPSIZE=1G
+export HBASE_OFFHEAPSIZE=8G
 
 # Extra Java runtime options.
 # Default settings are applied according to the detected JVM version. Override these default

@@ -41,4 +41,9 @@
     <name>hbase.unsafe.stream.capability.enforce</name>
     <value>false</value>
   </property>
+
+  <property>
+    <name>phoenix.query.maxServerCacheBytes</name>
+    <value>10485760000</value>
+  </property>
 </configuration>

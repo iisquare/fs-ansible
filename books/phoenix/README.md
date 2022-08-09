@@ -10,6 +10,10 @@ ansible-playbook -i hosts --tags install books/phoenix/phoenix.yaml
 ```
 ansible-playbook -i hosts --tags link books/phoenix/phoenix.yaml
 ```
+- 配置
+```
+ansible-playbook -i hosts --tags config books/phoenix/phoenix.yaml
+```
 - 测试
 ```
 /opt/phoenix-hbase-2.4-5.1.2-bin/bin/sqlline.py wsl:2181
@@ -24,6 +28,50 @@ compile fileTree(dir:'libs', include:['*.jar'])
 ```
 jdbc:phoenix:zk1,zk2,zk3:2181?user=&password=
 ```
+### DBeaver
+- 采用安装包中的客户端驱动
+```
+phoenix-client-hbase-2.4-5.1.2.jar
+```
+- 点击“找到类”，选择驱动类名
+
+### 常用命令
+
+- 查看所有的表
+```
+!table
+```
+ 
+- 查看指定表的字段信息
+```
+!describe <table>
+```
+ 
+- 之前输入的命令
+```
+!history
+```
+ 
+- 数据库的配置信息
+```
+!dbinfo
+```
+ 
+- 查看指定表上的索引
+```
+!index 表名
+```
+ 
+- 查看其他操作
+```
+!help
+```
+ 
+- 退出
+```
+!quit
+```
+ 
 
 ## 最佳实践
 

@@ -22,3 +22,10 @@
       dest: /opt/hbase-2.4.12/lib/phoenix-server-hbase-2.4-5.1.2.jar
       force: yes
       state: link
+  - name: config phoenix cli
+    tags: ['never', 'config']
+    file:
+      src: /opt/hbase-2.4.12/conf/hbase-site.xml
+      dest: /opt/phoenix-hbase-2.4-5.1.2-bin/bin/hbase-site.xml
+      force: yes
+      state: link
