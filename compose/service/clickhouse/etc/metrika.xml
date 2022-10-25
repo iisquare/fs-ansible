@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <yandex>
     <remote_servers>
-        <!-- 单分片多副本 -->
+        <!-- 单分片多副本集群 -->
         <{{ fs_db_cluster }}>
             <shard>
                 <internal_replication>true</internal_replication>
@@ -9,10 +9,39 @@
                 <replica>
                     <host>{{ host }}</host>
                     <port>9000</port>
+                    <user>root</user>
+                    <password>admin888</password>
                 </replica>
 {% endfor %}
             </shard>
         </{{ fs_db_cluster }}>
+        <!-- 测试集群，三节点两分片，2副本+1副本 -->
+        <fs_test>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>node101</host>
+                    <port>9000</port>
+                    <user>root</user>
+                    <password>admin888</password>
+                </replica>
+                <replica>
+                    <host>node102</host>
+                    <port>9000</port>
+                    <user>root</user>
+                    <password>admin888</password>
+                </replica>
+            </shard>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>node103</host>
+                    <port>9000</port>
+                    <user>root</user>
+                    <password>admin888</password>
+                </replica>
+            </shard>
+        </fs_test>
     </remote_servers>
 
     <zookeeper>

@@ -32,6 +32,11 @@ docker-compose stop clickhouse
 docker-compose rm -f clickhouse
 rm -rf /data/clickhouse/
 ```
+- 清理注册中心
+```
+sudo docker-compose exec zookeeper zkCli.sh
+deleteall /clickhouse/
+```
 
 ### 命令参考
 - CLI客户端
@@ -130,6 +135,27 @@ Docker cannot run any binaries with filesystem capabilities in unprivileged mode
 ```
 privileged: true
 ```
+
+### 分布式表查询异常
+- 异常信息
+```
+Code: 516. DB::Exception: Received from localhost:9000. DB::Exception: Received from node102:9000. DB::Exception: default: Authentication failed: password is incorrect or there is no user with such name. (AUTHENTICATION_FAILED)
+```
+- 问题原因：集群开启了用户验证，但在集群分片的配置中没有配置用户名和密码
+- 解决方法
+```
+<cluster_name>
+    <shard>
+        <replica>
+            <host>xxxxxx</host>
+            <port>9000</port>
+            <user>root</user>
+            <password>admin888</password>
+        </replica>
+    </shard>
+</cluster_name>
+```
+
 
 ## 参考
 - [ClickHouse Docs](https://clickhouse.com/docs/en/intro)
