@@ -156,6 +156,19 @@ Code: 516. DB::Exception: Received from localhost:9000. DB::Exception: Received 
 </cluster_name>
 ```
 
+### 执行脚本异常
+- 使用Docker环境执行上万行建表语句脚本
+```
+clickhouse-client --user 登录名 --password 密码 -d 数据库 --multiquery < ddl.sql
+```
+- 异常信息
+```
+Unmatched parentheses: (. (SYNTAX_ERROR)
+```
+- [解决方案](https://github.com/ClickHouse/ClickHouse/issues/19950)
+```
+clickhouse-client --user 登录名 --password 密码 -d 数据库 -mn < ddl.sql
+```
 
 ## 参考
 - [ClickHouse Docs](https://clickhouse.com/docs/en/intro)
