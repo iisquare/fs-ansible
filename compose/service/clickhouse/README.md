@@ -170,6 +170,37 @@ Unmatched parentheses: (. (SYNTAX_ERROR)
 clickhouse-client --user 登录名 --password 密码 -d 数据库 -mn < ddl.sql
 ```
 
+### 注意事项
+
+- 连表Join查询，当关联记录不存在时，其字段的默认值非NULL。
+- 采用Final用以查询最新记录，但在set insert_deduplicate = 1默认启用时，重复记录会被过滤。
+```
+insert into t_test (id, name, _sign, _version) values (1, 'a', 1, 0);
+insert into t_test (id, name, _sign, _version) values (1, 'b', 1, 0);
+select * from t_test; -- 同时返回a和b两条记录
+select * from t_test final; -- 仅返回b记录
+insert into t_test (id, name, _sign, _version) values (1, 'a', 1, 0); -- 该记录会被过滤掉
+select * from t_test; -- 同时返回ab两条记录
+select * from t_test final; -- 因为最后写入的a记录被过滤掉，仍然返回b记录
+-- 建议在每次写入时，通过更新版本号字段强制修改记录内容，以保证返回最新结果
+insert into t_test (id, name, _sign, _version) values (1, 'a', 1, 1);
+```
+- 采用Delete删除记录后Final查询会返回记录中最新的结果，若对应OrderKey存在旧记录会导致业务逻辑错误。
+```
+insert into t_test (id, name, _sign, _version) values (1, 'c', 1, 0);
+insert into t_test (id, name, _sign, _version) values (1, 'c', -1, 1);
+select * from t_test; -- 同时返回_sign=1和_sign=-1的记录
+select * from t_test final; -- 仅返回_sign=-1的记录
+alter table t_test delete where _sign = -1; -- 清理标记删除的数据
+select * from t_test final; -- 业务错误，返回_sign=1的记录
+insert into t_test (id, name, _sign, _version) values (1, 'd', 1, 0);
+select * from t_test; -- 同时返回c和d的记录
+select * from t_test final; -- 仅返回d的记录
+-- 推荐在清理数据前，在保障业务正常运转的情况下，先手动触发一次合并
+optimize table t_test final;
+```
+
+
 ## 参考
 - [ClickHouse Docs](https://clickhouse.com/docs/en/intro)
 - [ClickHouse-集群部署以及副本和分片](https://blog.csdn.net/clearlxj/article/details/121774940)
