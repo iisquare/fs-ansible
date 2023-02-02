@@ -119,6 +119,81 @@ select id, name, score, time, _version from fs_test final where _sign=1;
 select id, name, score, time, max(_version) from fs_test group by id, name, score, time having _sign=1;
 ```
 
+### 优化调试
+
+- 查看表数据量大小
+```
+select
+    database,
+    table,
+    formatReadableSize(size) as size,
+    formatReadableSize(bytes_on_disk) as bytes_on_disk,
+    formatReadableSize(data_uncompressed_bytes) as data_uncompressed_bytes,
+    formatReadableSize(data_compressed_bytes) as data_compressed_bytes,
+    compress_rate,
+    rows,
+    days,
+    formatReadableSize(avgDaySize) as avgDaySize
+from (
+    select
+        database,
+        table,
+        sum(bytes) as size,
+        sum(rows) as rows,
+        min(min_date) as min_date,
+        max(max_date) as max_date,
+        sum(bytes_on_disk) as bytes_on_disk,
+        sum(data_uncompressed_bytes) as data_uncompressed_bytes,
+        sum(data_compressed_bytes) as data_compressed_bytes,
+        (data_compressed_bytes / data_uncompressed_bytes) * 100 as compress_rate,
+        max_date - min_date as days,
+        size / (max_date - min_date) as avgDaySize
+    from system.parts
+    where active  and database = 'database' and table = 'tablename'
+    group by database, table
+)
+```
+- 查看参数配置
+```
+show show settings ilike 'max_%';
+-- max_memory_usage: 单个查询的最大内存，可以与所有查询的最大内存一致
+-- max_memory_usage_for_all_queries： 单个服务器上所有查询的最大内存，要给系统预留一些
+-- max_bytes_before_external_group_by: 可以为查询内存的一半，达到限制后写磁盘进行分组计算
+```
+- 查看当前连接数
+```
+SELECT * FROM system.metrics WHERE metric LIKE '%Connection';
+```
+- 正在执行的查询
+```
+SELECT query_id, user, address, query  FROM system.processes ORDER BY query_id;
+KILL QUERY WHERE query_id='ff695827-dbf5-45ad-9858-a853946ea140';
+SELECT database, table, mutation_id, command, create_time, is_done FROM system.mutations;
+KILL MUTATION WHERE mutation_id = ‘mutation_id’;
+```
+- 查询耗时及资源占用
+```
+SELECT 
+    user as user, 
+    client_hostname AS client_hostname, 
+    client_name AS client_name, 
+    formatDateTime(query_start_time, '%T') AS query_start_time, 
+    query_duration_ms / 1000 AS query_duration_ms, 
+    round(memory_usage / 1048576) AS memory_usage, 
+    result_rows AS result_rows, 
+    result_bytes / 1048576 AS result_bytes, 
+    read_rows AS read_rows, 
+    round(read_bytes / 1048576) AS read_bytes, 
+    written_rows AS written_rows, 
+    round(written_bytes / 1048576) AS written_bytes, 
+    query
+FROM system.query_log
+WHERE type = 2
+ORDER BY query_duration_ms DESC
+LIMIT 10
+```
+
+
 ## 常见问题
 
 ### 查询异常
