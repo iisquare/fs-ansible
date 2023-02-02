@@ -177,8 +177,8 @@ SELECT
     user as user, 
     client_hostname AS client_hostname, 
     client_name AS client_name, 
-    formatDateTime(query_start_time, '%T') AS query_start_time, 
-    query_duration_ms / 1000 AS query_duration_ms, 
+    query_start_time AS query_start_time, 
+    query_duration_ms / 1000 AS query_duration, 
     round(memory_usage / 1048576) AS memory_usage, 
     result_rows AS result_rows, 
     result_bytes / 1048576 AS result_bytes, 
@@ -189,8 +189,8 @@ SELECT
     query
 FROM system.query_log
 WHERE type = 2
-ORDER BY query_duration_ms DESC
-LIMIT 10
+ORDER BY query_start_time DESC
+LIMIT 3\G;
 ```
 
 
