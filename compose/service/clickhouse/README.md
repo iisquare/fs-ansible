@@ -155,10 +155,11 @@ from (
 ```
 - 查看参数配置
 ```
-show show settings ilike 'max_%';
+show settings ilike 'max_%';
 -- max_memory_usage: 单个查询的最大内存，可以与所有查询的最大内存一致
 -- max_memory_usage_for_all_queries： 单个服务器上所有查询的最大内存，要给系统预留一些
 -- max_bytes_before_external_group_by: 可以为查询内存的一半，达到限制后写磁盘进行分组计算
+-- max_server_memory_usage: 服务使用的最大内存，默认为（memory_amount * max_server_memory_usage_to_ram_ratio）
 ```
 - 查看当前连接数
 ```
