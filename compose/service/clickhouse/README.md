@@ -276,6 +276,29 @@ select * from t_test final; -- 仅返回d的记录
 optimize table t_test final;
 ```
 - 在关联查询时，Where条件仅下推到左表，应尽量将过滤条件加在JOIN的子查询中，具体以EXPLAIN执行计划为准。
+```
+// 在大小表Join关联查询时，EXPLAIN JOIN FillRightFirst，应尽量将小表或子查询后的小表放在右侧
+enum class JoinPipelineType
+{
+    /*
+     * Right stream processed first, then when join data structures are ready, the left stream is processed using it.
+     * The pipeline is not sorted.
+     */
+    FillRightFirst,
+
+    /*
+     * Only the left stream is processed. Right is already filled.
+     */
+    FilledRight,
+
+    /*
+     * The pipeline is created from the left and right streams processed with merging transform.
+     * Left and right streams have the same priority and are processed simultaneously.
+     * The pipelines are sorted.
+     */
+    YShaped,
+};
+```
 
 
 ## 参考
