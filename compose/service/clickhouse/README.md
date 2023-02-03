@@ -275,21 +275,7 @@ select * from t_test final; -- 仅返回d的记录
 -- 推荐在清理数据前，在保障业务正常运转的情况下，先手动触发一次合并
 optimize table t_test final;
 ```
-- 在JOIN关联查询时，遵循小表在右的原则，尽量将过滤条件加在JOIN的子查询中，若左表为子查询则分布式规则不生效。
-```
-select ...
-from t_all -- 左表避免使用子查询，否则分布式规则不生效
-join ( -- 右表本身直接走本地表
-  select ...
-  from t_local
-  where t_local.filter = xxx -- 尽可能手动将条件放在子查询中
-)
-where
-  t_local.f = xxx -- 当前版本不支持自动下推到JOIN查询中，需要手动修改
-  and t_all.f in (
-    select ... from xxx -- 若能将子查询作为筛选条件更佳
-  )
-```
+- 在关联查询时，Where条件仅下推到左表，应尽量将过滤条件加在JOIN的子查询中，具体以EXPLAIN执行计划为准。
 
 
 ## 参考
