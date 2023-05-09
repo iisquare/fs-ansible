@@ -29,7 +29,7 @@
   </property>
   <property>
     <name>dfs.journalnode.edits.dir</name>
-    <value>file://{{ fs_hadoop_data }}/journalnode</value>
+    <value>{{ fs_hadoop_data }}/journalnode</value>
   </property>
   <property>
     <name>dfs.ha.namenodes.{{ fs_hadoop_cluster }}</name>
