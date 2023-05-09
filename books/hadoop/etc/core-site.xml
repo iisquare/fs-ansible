@@ -19,14 +19,11 @@
   <property>
     <name>fs.defaultFS</name>
     <value>hdfs://{{ fs_hadoop_cluster }}</value>
-  </property>    
+  </property>
+  <!-- 配置到持久化目录，避免元数据丢失 -->
   <property>
     <name>hadoop.tmp.dir</name>
     <value>{{ fs_hadoop_data }}/tmp</value>
-  </property>
-  <property>
-    <name>dfs.journalnode.edits.dir</name>
-    <value>file://{{ fs_hadoop_data }}/journalnode</value>
   </property>
 
   <!-- HA Config -->
@@ -38,11 +35,5 @@
   <property>
     <name>hadoop.http.staticuser.user</name>
     <value>root</value>
-  </property>
-
-  <!-- 配置到持久化目录，避免元数据丢失 -->
-  <property>
-    <name>hadoop.tmp.dir</name>
-    <value>{{ fs_hadoop_data }}/tmp</value>
   </property>
 </configuration>

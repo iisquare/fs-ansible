@@ -63,4 +63,5 @@ $HADOOP_HOME/bin/yarn application -help
 - yarn.resourcemanager.webapp.address:8088
 
 ## 参考
--[大数据hadoop3.1.3——Hadoop HA高可用学习笔记（安装与配置）](https://blog.csdn.net/qq_42502354/article/details/105980277)
+- [Apache Hadoop Documentation](https://hadoop.apache.org/docs/r3.3.5/)
+- [大数据hadoop3.1.3——Hadoop HA高可用学习笔记（安装与配置）](https://blog.csdn.net/qq_42502354/article/details/105980277)

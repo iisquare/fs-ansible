@@ -28,6 +28,10 @@
     <value>file://{{ fs_hadoop_data }}/datanode</value>
   </property>
   <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>file://{{ fs_hadoop_data }}/journalnode</value>
+  </property>
+  <property>
     <name>dfs.ha.namenodes.{{ fs_hadoop_cluster }}</name>
     <value>nn1,nn2,nn3</value>
   </property>
@@ -85,7 +89,7 @@
     <name>hbase.regionserver.wal.codec</name>
     <value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
   </property>
-
+  
   <property>
     <name>dfs.permissions.enabled</name>
     <value>true</value>
