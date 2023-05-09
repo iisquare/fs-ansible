@@ -30,7 +30,6 @@
         export YARN_NODEMANAGER_USER={{ hadoop_user }}
         export HDFS_JOURNALNODE_USER={{ hadoop_user }}
         export HDFS_ZKFC_USER={{ hadoop_user }}
-    when: not work_dir.stat.exists
   - name: config hadoop
     tags: ['never', 'config']
     template:
