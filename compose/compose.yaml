@@ -8,25 +8,25 @@
   - name: make work dir
     tags: ['never', 'init']
     file:
-      path: "{{ fs_work_dir }}"
+      path: "{{ fs_compose_dir }}"
       state: directory
 
   - name: copy env file
     tags: ['never', 'init', 'env']
     copy:
       src: ./.env
-      dest: "{{ fs_work_dir }}/.env"
+      dest: "{{ fs_compose_dir }}/.env"
 
   - name: compose file
     tags: ['never', 'init']
     template:
       src: ./{{ item }}
-      dest: "{{ fs_work_dir }}/{{ item }}"
+      dest: "{{ fs_compose_dir }}/{{ item }}"
     with_items:
     - docker-compose.yml
 
   - name: remove work dir
     tags: ['never', 'remove']
     file:
-      path: "{{ fs_work_dir }}"
+      path: "{{ fs_compose_dir }}"
       state: absent

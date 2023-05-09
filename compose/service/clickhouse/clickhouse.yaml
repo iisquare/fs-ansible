@@ -1,7 +1,7 @@
 - hosts: clickhouse
   user: root
   vars:
-    service_dir: "{{ fs_work_dir }}/service/clickhouse"
+    service_dir: "{{ fs_compose_dir }}/service/clickhouse"
   tasks:
   - name: make service dir
     tags: ['never', 'init']
@@ -26,7 +26,7 @@
     blockinfile:
       backup: no
       marker: '# {mark} SERVICE FOR CLICKHOUSE'
-      path: "{{ fs_work_dir }}/docker-compose.yml"
+      path: "{{ fs_compose_dir }}/docker-compose.yml"
       block: |
         # Do not modify manually
           clickhouse:

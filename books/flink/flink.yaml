@@ -1,0 +1,34 @@
+- hosts: hadoop
+  user: root
+  vars:
+    hadoop_user: root
+  tasks:
+  - name: check flink
+    tags: ['never', 'install']
+    stat:
+      path: /opt/flink-1.14.6
+    register: work_dir
+  - name: install flink
+    tags: ['never', 'install']
+    unarchive:
+      copy: yes
+      src: ../../archives/flink-1.14.6-bin-scala_2.12.tgz
+      dest: /opt/
+    when: not work_dir.stat.exists
+  - name: change flink bashrc
+    tags: ['never', 'install']
+    blockinfile:
+      backup: yes
+      marker: '# {mark} ANSIBLE BLOCK FOR FLINK'
+      path: /etc/bashrc
+      block: |
+        export FLINK_HOME=/opt/flink-1.14.6
+        export HADOOP_CLASSPATH=`$HADOOP_HOME/bin/hadoop classpath`
+    when: not work_dir.stat.exists
+  - name: config flink
+    tags: ['never', 'config']
+    template:
+      src: ./conf/{{ item }}
+      dest: /opt/flink-1.14.6/conf/{{ item }}
+    with_items:
+    - flink-conf.yaml

@@ -14,18 +14,18 @@ ansible-playbook -i hosts --tags config books/spark/spark.yaml
 - 管理
 ```
 # 只能启动执行节点的Master服务
-/opt/spark-3.2.1-bin-hadoop3.2/sbin/start-all.sh
-/opt/spark-3.2.1-bin-hadoop3.2/sbin/stop-all.sh
+$SPARK_HOME/sbin/start-all.sh
+$SPARK_HOME/sbin/stop-all.sh
 # 在其他节点上手动拉起Master服务
-/opt/spark-3.2.1-bin-hadoop3.2/sbin/start-master.sh
-/opt/spark-3.2.1-bin-hadoop3.2/sbin/stop-master.sh
+$SPARK_HOME/sbin/start-master.sh
+$SPARK_HOME/sbin/stop-master.sh
 ```
 - 历史服务（History Server）
 ```
 # 创建目录
-/opt/hadoop-3.3.2/bin/hdfs dfs -mkdir /spark-events
-/opt/spark-3.2.1-bin-hadoop3.2/sbin/start-history-server.sh
-/opt/spark-3.2.1-bin-hadoop3.2/sbin/stop-history-server.sh
+$HADOOP_HOME/bin/hdfs dfs -mkdir /spark-events
+$SPARK_HOME/sbin/start-history-server.sh
+$SPARK_HOME/sbin/stop-history-server.sh
 ```
 
 ### 服务地址

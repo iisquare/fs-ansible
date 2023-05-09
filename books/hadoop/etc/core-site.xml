@@ -18,20 +18,31 @@
   <!-- based on dfs.nameservices -->
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://{{ fs_cluster }}</value>
+    <value>hdfs://{{ fs_hadoop_cluster }}</value>
   </property>    
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>{{ fs_data }}/tmp</value>
+    <value>{{ fs_hadoop_data }}/tmp</value>
   </property>
   <property>
     <name>dfs.journalnode.edits.dir</name>
-    <value>file://{{ fs_data }}/journalnode</value>
+    <value>file://{{ fs_hadoop_data }}/journalnode</value>
   </property>
 
   <!-- HA Config -->
   <property>
     <name>ha.zookeeper.quorum</name>
     <value>{{ fs_zk_quorum }}</value>
+  </property>
+
+  <property>
+    <name>hadoop.http.staticuser.user</name>
+    <value>root</value>
+  </property>
+
+  <!-- 配置到持久化目录，避免元数据丢失 -->
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>{{ fs_hadoop_data }}/tmp</value>
   </property>
 </configuration>

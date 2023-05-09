@@ -1,8 +1,8 @@
 name: '{{ hostname }}'
 data-dir: /var/etcd
-initial-cluster: '{{ fs_initial_cluster }}'
+initial-cluster: '{{ fs_etcd_initial }}'
 initial-cluster-state: 'new'
-initial-cluster-token: '{{ fs_cluster }}'
+initial-cluster-token: '{{ fs_etcd_cluster }}'
 advertise-client-urls: 'http://{{ inventory_hostname }}:2379'
 initial-advertise-peer-urls: 'http://{{ inventory_hostname }}:2380'
 listen-peer-urls: 'http://0.0.0.0:2380'

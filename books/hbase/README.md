@@ -17,17 +17,17 @@ ansible-playbook -i hosts --tags fixed books/hbase/hbase.yaml
 ```
 - 手动启动
 ```
-/opt/hbase-2.4.12/bin/hbase-daemon.sh start master 
-/opt/hbase-2.4.12/bin/hbase-daemon.sh start regionserver 
-/opt/hbase-2.4.12/bin/hbase-daemon.sh start master --backup
-/opt/hbase-2.4.12/bin/hbase-daemon.sh stop master
-/opt/hbase-2.4.12/bin/hbase-daemon.sh stop regionserver
+$HBASE_HOME/bin/hbase-daemon.sh start master 
+$HBASE_HOME/bin/hbase-daemon.sh start regionserver 
+$HBASE_HOME/bin/hbase-daemon.sh start master --backup
+$HBASE_HOME/bin/hbase-daemon.sh stop master
+$HBASE_HOME/bin/hbase-daemon.sh stop regionserver
 ```
 - 管理
 ```
-/opt/hbase-2.4.12/bin/start-hbase.sh
-/opt/hbase-2.4.12/bin/stop-hbase.sh
-/opt/hbase-2.4.12/bin/hbase shell
+$HBASE_HOME/bin/start-hbase.sh
+$HBASE_HOME/bin/stop-hbase.sh
+$HBASE_HOME/bin/hbase shell
 ```
 
 ### 重置
@@ -37,8 +37,8 @@ jps|grep "HMaster\|HRegionServer"|awk '{print $1}'|xargs kill -s TERM
 ```
 - 清理HDFS配置
 ```
-/opt/hadoop-3.3.2/bin/hdfs dfs -ls /
-/opt/hadoop-3.3.2/bin/hdfs dfs -rm -r /hbase
+$HADOOP_HOME/bin/hdfs dfs -ls /
+$HADOOP_HOME/bin/hdfs dfs -rm -r /hbase
 ```
 - 清理Zookeeper配置
 ```
@@ -46,7 +46,7 @@ deleteall /hbase
 ```
 - 清理日志文件
 ```
-rm -f /opt/hbase-2.4.12/logs/*
+rm -f $HBASE_HOME/logs/*
 ```
 
 ### 服务地址
@@ -57,16 +57,16 @@ rm -f /opt/hbase-2.4.12/logs/*
 ### Web UI 中没有HRegionServer列表
 - Hadoop安全模式
 ```
-/opt/hadoop-3.3.2/bin/hdfs dfsadmin -safemode get
-/opt/hadoop-3.3.2/bin/hdfs dfsadmin -safemode leave
+$HADOOP_HOME/bin/hdfs dfsadmin -safemode get
+$HADOOP_HOME/bin/hdfs dfsadmin -safemode leave
 ```
 - 与Hadoop版本不兼容
 ```
-# vi /opt/hbase-2.4.12/logs/hbase-root-master-node101.log
+# vi $HBASE_HOME/logs/hbase-root-master-node101.log
 java.lang.IllegalArgumentException: object is not an instance of declaring class
 # 替换slf4j-*.jar
 # vi hbase-env.sh
-export HBASE_CLASSPATH=/opt/hadoop-3.3.2/etc/hadoop/
+export HBASE_CLASSPATH=$HADOOP_HOME/etc/hadoop/
 export HBASE_DISABLE_HADOOP_CLASSPATH_LOOKUP="true"
 ```
 

@@ -1,7 +1,7 @@
 - hosts: minio
   user: root
   vars:
-    service_dir: "{{ fs_work_dir }}/service/minio"
+    service_dir: "{{ fs_compose_dir }}/service/minio"
   tasks:
   - name: make service dir
     tags: ['never', 'init']
@@ -20,7 +20,7 @@
     blockinfile:
       backup: no
       marker: '# {mark} SERVICE FOR MINIO'
-      path: "{{ fs_work_dir }}/docker-compose.yml"
+      path: "{{ fs_compose_dir }}/docker-compose.yml"
       block: |
         # Do not modify manually
           minio:
@@ -33,7 +33,7 @@
             environment:
               MINIO_ROOT_USER: ${MINIO_ROOT_USER}
               MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-            command: server {{ fs_server_url }} --console-address ":9001"
+            command: server {{ fs_minio_server }} --console-address ":9001"
             volumes:
               - ${DATA_DIR}/minio/export1:/export1
               - ${DATA_DIR}/minio/export2:/export2

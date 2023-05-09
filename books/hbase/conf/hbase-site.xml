@@ -23,7 +23,7 @@
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://{{ fs_cluster }}/hbase</value>
+    <value>hdfs://{{ fs_hadoop_cluster }}/hbase</value>
   </property>
   <property>
     <name>hbase.cluster.distributed</name>

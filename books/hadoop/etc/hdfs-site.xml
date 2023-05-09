@@ -17,47 +17,47 @@
 <configuration>
   <property>
     <name>dfs.nameservices</name>
-    <value>{{ fs_cluster }}</value>
+    <value>{{ fs_hadoop_cluster }}</value>
   </property>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>file://{{ fs_data }}/namenode</value>
+    <value>file://{{ fs_hadoop_data }}/namenode</value>
   </property>
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>file://{{ fs_data }}/datanode</value>
+    <value>file://{{ fs_hadoop_data }}/datanode</value>
   </property>
   <property>
-    <name>dfs.ha.namenodes.{{ fs_cluster }}</name>
+    <name>dfs.ha.namenodes.{{ fs_hadoop_cluster }}</name>
     <value>nn1,nn2,nn3</value>
   </property>
   <property>
-    <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn1</name>
-    <value>{{ fs_ha_1 }}:9000</value>
+    <name>dfs.namenode.rpc-address.{{ fs_hadoop_cluster }}.nn1</name>
+    <value>{{ fs_hadoop_ha1 }}:9000</value>
   </property>
   <property>
-    <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn2</name>
-    <value>{{ fs_ha_2 }}:9000</value>
+    <name>dfs.namenode.rpc-address.{{ fs_hadoop_cluster }}.nn2</name>
+    <value>{{ fs_hadoop_ha2 }}:9000</value>
   </property>
   <property>
-    <name>dfs.namenode.rpc-address.{{ fs_cluster }}.nn3</name>
-    <value>{{ fs_ha_3 }}:9000</value>
+    <name>dfs.namenode.rpc-address.{{ fs_hadoop_cluster }}.nn3</name>
+    <value>{{ fs_hadoop_ha3 }}:9000</value>
   </property>  
   <property>
-    <name>dfs.namenode.http-address.{{ fs_cluster }}.nn1</name>
-    <value>{{ fs_ha_1 }}:9870</value>
+    <name>dfs.namenode.http-address.{{ fs_hadoop_cluster }}.nn1</name>
+    <value>{{ fs_hadoop_ha1 }}:9870</value>
   </property>   
   <property>
-    <name>dfs.namenode.http-address.{{ fs_cluster }}.nn2</name>
-    <value>{{ fs_ha_2 }}:9870</value>
+    <name>dfs.namenode.http-address.{{ fs_hadoop_cluster }}.nn2</name>
+    <value>{{ fs_hadoop_ha2 }}:9870</value>
   </property>
   <property>
-    <name>dfs.namenode.http-address.{{ fs_cluster }}.nn3</name>
-    <value>{{ fs_ha_3 }}:9870</value>
+    <name>dfs.namenode.http-address.{{ fs_hadoop_cluster }}.nn3</name>
+    <value>{{ fs_hadoop_ha3 }}:9870</value>
   </property>   
   <property>
     <name>dfs.namenode.shared.edits.dir</name>
-    <value>qjournal://{{ fs_ha_1 }}:8485;{{ fs_ha_2 }}:8485;{{ fs_ha_3 }}:8485/{{ fs_cluster }}</value>
+    <value>qjournal://{{ fs_hadoop_ha1 }}:8485;{{ fs_hadoop_ha2 }}:8485;{{ fs_hadoop_ha3 }}:8485/{{ fs_hadoop_cluster }}</value>
   </property>
   <!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 -->
   <property>
@@ -67,11 +67,11 @@
   <!-- 使用隔离机制时需要ssh无秘钥登录 -->
   <property>
     <name>dfs.ha.fencing.ssh.private-key-files</name>
-    <value>{{ fs_home }}/.ssh/id_rsa</value>
+    <value>{{ fs_ssh_home }}/.ssh/id_rsa</value>
   </property>   
   <!-- 访问代理类：client用于确定哪个NameNode为Active -->
   <property>
-    <name>dfs.client.failover.proxy.provider.{{ fs_cluster }}</name>
+    <name>dfs.client.failover.proxy.provider.{{ fs_hadoop_cluster }}</name>
     <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
   </property>
 
@@ -84,5 +84,10 @@
   <property>
     <name>hbase.regionserver.wal.codec</name>
     <value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>true</value>
   </property>
 </configuration>
