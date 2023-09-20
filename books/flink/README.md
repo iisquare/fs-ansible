@@ -38,5 +38,25 @@ $FLINK_HOME/bin/flink -h
 export HADOOP_CLASSPATH=`hadoop classpath`
 ```
 
+
+## 最佳实践
+
+### 内存配置
+```
+在flink-conf.yaml配置文件中：
+在SessionOnYarn模式中，每个Session会启动一个JobManager和多个TaskManager，一个TaskManager对应Yarn中一个Container。
+通过taskmanager.memory.process.size可以限制TaskManager/Container申请的内存大小。
+一个TaskManager默认包含一个Slot插槽，通过taskmanager.numberOfTaskSlots可以修改Slot数量；
+同一个TaskManager下的每个Slot将获得taskmanager.memory.process.size/taskmanager.numberOfTaskSlots的内存分配；
+通过taskmanager.memory.flink.size可限制单个Slot中的Flink任务的内存。
+在yarn-session.sh命令参数中：
+通过-tm/--taskManagerMemory可指定每个TaskManager的内存分配大小。
+通过-s/--slots可指定每个TaskManager中的插槽数量。
+在flink run命令参数中：
+通过-ytm/--yarnsessiontaskmanagermemory指定每个TaskManager的内存大小。
+通过-ys/--yarnslot指定每个TaskManager的插槽数量。
+```
+
+
 ## 参考
 - [Apache Flink Documentation](https://nightlies.apache.org/flink/flink-docs-release-1.14/)

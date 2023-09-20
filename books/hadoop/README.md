@@ -57,10 +57,21 @@ $HADOOP_HOME/bin/hadoop job -h
 $HADOOP_HOME/bin/yarn application -help
 ```
 
-
 ### 服务地址
 - dfs.namenode.http-address:9870
 - yarn.resourcemanager.webapp.address:8088
+
+## 最佳实践
+
+### 资源配置
+```
+在yarn-site.xml中：
+通过yarn.nodemanager.resource.cpu-vcores配置单个节点可使用的虚拟CPU个数。
+通过yarn.scheduler.minimum-allocation-vcores配置单个任务可申请的最小虚拟CPU个数。
+通过yarn.scheduler.maximum-allocation-vcores配置单个任务可申请的最多虚拟CPU个数。
+通过yarn.scheduler.minimum-allocation-mb配置单个任务/容器可申请的最小内存大小。
+通过yarn.scheduler.maximum-allocation-mb配置单个任务/容器可申请的最大内存大小。
+```
 
 ## 参考
 - [Apache Hadoop Documentation](https://hadoop.apache.org/docs/r3.3.5/)
