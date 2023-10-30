@@ -23,3 +23,8 @@ ansible-playbook -i hosts --tags expect books/system/centos.yaml
 ```
 ansible-playbook -i hosts --tags rsync books/system/centos.yaml
 ```
+### 基础服务
+- 安装jdk
+```
+ansible-playbook -i hosts --tags jdk books/system/java.yaml
+```

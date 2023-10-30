@@ -3,6 +3,8 @@ node101 hostname=node101
 node102 hostname=node102
 node103 hostname=node103
 node104 hostname=node104
+node105 hostname=node105
+node106 hostname=node106
 
 [hadoop]
 node101
@@ -28,6 +30,11 @@ node103 coordinator=false worker=true
 [trino:vars]
 fs_trino_environment=fs_project
 fs_trino_discovery_host=node101
+
+[doris]
+node101
+node102
+node103
 
 [compose]
 node101

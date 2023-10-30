@@ -14,7 +14,7 @@ ansible-playbook -i hosts --tags config compose/service/clickhouse/clickhouse.ya
 ```
 - 同步镜像
 ```
-./sbin/docker-archive.sh -i clickhouse/clickhouse-server -v 22.7.1.2484 -u root -h node101,node102,node103
+./sbin/docker-archive.sh -i clickhouse/clickhouse-server -v 23.8.4.69 -u root -h node101,node102,node103
 ```
 - 默认认证
 ```

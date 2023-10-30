@@ -1,0 +1,38 @@
+- hosts: doris
+  user: root
+  tasks:
+  - name: check doris
+    tags: ['never', 'install']
+    stat:
+      path: /opt/apache-doris-2.0.2-bin-x64
+    register: work_dir
+
+  - name: install doris
+    tags: ['never', 'install']
+    unarchive:
+      copy: yes
+      src: ../../archives/apache-doris-2.0.2-bin-x64.tar.gz
+      dest: /opt/
+    when: not work_dir.stat.exists
+
+  - name: config doris
+    tags: ['never', 'config']
+    template:
+      src: ./conf/{{ item }}
+      dest: /opt/apache-doris-2.0.2-bin-x64/fe/conf/{{ item }}
+    with_items:
+    - fe.conf
+
+  - name: config doris
+    tags: ['never', 'config']
+    template:
+      src: ./conf/{{ item }}
+      dest: /opt/apache-doris-2.0.2-bin-x64/be/conf/{{ item }}
+    with_items:
+    - be.conf
+
+  - name: clear data dir
+    tags: ['never', 'clear']
+    file:
+      path: /data/doris
+      state: absent
