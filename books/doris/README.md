@@ -17,8 +17,10 @@ sysctl -p
 ulimit -a
 ulimit -n 65536
 vi /etc/security/limits.conf
-*　　soft　　nofile　　65536
-*　　hard　　nofile　　65536
+*    soft    nofile    65536
+*    hard    nofile    65536
+*    soft    nproc     65536
+*    hard    nproc     65536
 ```
 - swap
 ```
