@@ -99,6 +99,15 @@ ALTER SYSTEM ADD BROKER fs_broker "192.168.80.103:8000";
 - be:webserver_port = 8040
 
 ### 常用命令
+- 数据探查
+```
+show catalogs\G;
+show databases from fs_mysql;
+show tables from fs_mysql.fs_test;
+use fs_mysql.fs_test;
+desc t_demo;
+show create table t_demo;
+```
 - 数据导入
 ```
 # 建库建表
