@@ -35,6 +35,7 @@ vi /etc/fstab
 mkdir -p /data/doris/log
 mkdir -p /data/doris/meta
 mkdir -p /data/doris/storage
+mkdir -p /data/doris/jdbc_drivers
 ```
 
 ### 安装配置
