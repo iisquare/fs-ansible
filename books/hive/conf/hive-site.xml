@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <!-- 元数据存储 -->
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.cj.jdbc.Driver</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://wsl:3306/hive?useSSL=false</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>root</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>admin888</value>
+  </property>
+  <!-- MetaStore服务 -->
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>/user/hive/warehouse</value>
+    <description>Hive默认在HDFS的工作目录</description>
+  </property>
+  <property>
+    <name>hive.metastore.port</name>
+    <value>9083</value>
+    <description>Hive metastore listener port</description>
+  </property>
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://node101:9083,thrift://node102:9083,thrift://node103:9083</value>
+    <description>指定MetaStore服务的地址</description>
+  </property>
+  <!-- HS2服务 -->
+  <property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>{{ inventory_hostname }}</value>
+    <description>指定HiveServer2连接的主机名</description>
+  </property>
+  <property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+    <description>指定HiveServer2连接的端口号</description>
+  </property>
+  <property>
+    <name>hive.server2.webui.host</name>
+    <value>0.0.0.0</value>
+  </property>
+  <property>
+    <name>hive.server2.webui.port</name>
+    <value>10002</value>
+  </property>
+  <!-- HA -->
+  <property>
+    <name>hive.server2.active.passive.ha.enable</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.server2.zookeeper.namespace</name>
+    <value>hiveserver2_zk</value>
+  </property>
+  <property>
+    <name>hive.zookeeper.quorum</name>
+    <value>wsl</value>
+  </property>
+  <property>
+    <name>hive.zookeeper.client.port</name>
+    <value>2181</value>
+  </property>
+  <!-- CLI定制 -->
+  <property>
+    <name>hive.cli.print.header</name>
+    <value>true</value>
+    <description>显示表的列名</description>
+  </property>
+  <property>
+    <name>hive.cli.print.current.db</name>
+    <value>true</value>
+    <description>显示数据库名称</description>
+  </property>
+</configuration>

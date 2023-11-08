@@ -36,4 +36,14 @@
     <name>hadoop.http.staticuser.user</name>
     <value>root</value>
   </property>
+
+  <!-- 配置访问Hadoop的权限，能够让Hive访问到 -->
+	<property>
+		<name>hadoop.proxyuser.root.hosts</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.root.users</name>
+		<value>*</value>
+	</property>
 </configuration>

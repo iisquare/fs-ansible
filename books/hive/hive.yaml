@@ -3,52 +3,47 @@
   vars:
     hadoop_user: root
   tasks:
-  - name: check hbase
+  - name: check hive
     tags: ['never', 'install']
     stat:
-      path: /opt/hbase-2.4.12
+      path: /opt/apache-hive-3.1.3-bin
     register: work_dir
-  - name: install hbase
+  - name: install hive
     tags: ['never', 'install']
     unarchive:
       copy: yes
-      src: ../../archives/hbase-2.4.12-bin.tar.gz
+      src: ../../archives/apache-hive-3.1.3-bin.tar.gz
       dest: /opt/
     when: not work_dir.stat.exists
-  - name: change hbase bashrc
+  - name: change hive bashrc
     tags: ['never', 'install']
     blockinfile:
       backup: yes
-      marker: '# {mark} ANSIBLE BLOCK FOR HBASE'
+      marker: '# {mark} ANSIBLE BLOCK FOR HIVE'
       path: /etc/bashrc
       block: |
-        export HBASE_HOME=/opt/hbase-2.4.12
+        export HIVE_HOME=/opt/apache-hive-3.1.3-bin
     when: not work_dir.stat.exists
-  - name: config hbase
+  - name: config hive
     tags: ['never', 'config']
     template:
       src: ./conf/{{ item }}
-      dest: /opt/hbase-2.4.12/conf/{{ item }}
+      dest: /opt/apache-hive-3.1.3-bin/conf/{{ item }}
     with_items:
-    - hbase-env.sh
-    - regionservers
-    - backup-masters
-    - hbase-site.xml
-  - name: fixed compatible rm slf4j-*
+    - hive-site.xml
+  - name: fixed compatible rm guava
     tags: ['never', 'fixed']
     file:
-      path: /opt/hbase-2.4.12/lib/client-facing-thirdparty/{{ item }}
+      path: /opt/apache-hive-3.1.3-bin/lib/{{ item }}
       state: absent
     with_items:
-    - slf4j-api-1.7.33.jar
-    - slf4j-reload4j-1.7.33.jar
+    - guava-19.0.jar
   - name: fixed compatible link hadoop
     tags: ['never', 'fixed']
     file:
       src: /opt/hadoop-3.3.6/share/hadoop/common/lib/{{ item }}
-      dest: /opt/hbase-2.4.12/lib/client-facing-thirdparty/{{ item }}
+      dest: /opt/apache-hive-3.1.3-bin/lib/{{ item }}
       force: yes
       state: link
     with_items:
-    - slf4j-api-1.7.36.jar
-    - slf4j-reload4j-1.7.36.jar
+    - guava-27.0-jre.jar
