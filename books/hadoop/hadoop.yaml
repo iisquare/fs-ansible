@@ -6,13 +6,13 @@
   - name: check hadoop
     tags: ['never', 'install']
     stat:
-      path: /opt/hadoop-3.3.2
+      path: /opt/hadoop-3.3.6
     register: work_dir
   - name: install hadoop
     tags: ['never', 'install']
     unarchive:
       copy: yes
-      src: ../../archives/hadoop-3.3.2.tar.gz
+      src: ../../archives/hadoop-3.3.6.tar.gz
       dest: /opt/
     when: not work_dir.stat.exists
   - name: change hadoop bashrc
@@ -22,7 +22,7 @@
       marker: '# {mark} ANSIBLE BLOCK FOR HADOOP'
       path: /etc/bashrc
       block: |
-        export HADOOP_HOME=/opt/hadoop-3.3.2
+        export HADOOP_HOME=/opt/hadoop-3.3.6
         export HDFS_NAMENODE_USER={{ hadoop_user }}
         export HDFS_DATANODE_USER={{ hadoop_user }}
         export HDFS_SECONDARYNAMENODE_USER={{ hadoop_user }}
@@ -34,7 +34,7 @@
     tags: ['never', 'config']
     template:
       src: ./etc/{{ item }}
-      dest: /opt/hadoop-3.3.2/etc/hadoop/{{ item }}
+      dest: /opt/hadoop-3.3.6/etc/hadoop/{{ item }}
     with_items:
     - workers
     - core-site.xml

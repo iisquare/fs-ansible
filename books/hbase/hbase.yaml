@@ -45,7 +45,7 @@
   - name: fixed compatible link hadoop
     tags: ['never', 'fixed']
     file:
-      src: /opt/hadoop-3.3.2/share/hadoop/common/lib/{{ item }}
+      src: /opt/hadoop-3.3.6/share/hadoop/common/lib/{{ item }}
       dest: /opt/hbase-2.4.12/lib/client-facing-thirdparty/{{ item }}
       force: yes
       state: link
