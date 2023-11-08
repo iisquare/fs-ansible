@@ -38,8 +38,7 @@ $HIVE_HOME/bin/hive
 # BeeLine
 $HIVE_HOME/bin/beeline -u jdbc:hive2://127.0.0.1:10000 -n root
 # BeeLine通过ZK进行HA访问
-$HIVE_HOME/bin/beeline
-!connect jdbc:hive2://wsl/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2_zk
+$HIVE_HOME/bin/beeline -u 'jdbc:hive2://wsl:2181/;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2'
 ```
 
 ### 服务地址

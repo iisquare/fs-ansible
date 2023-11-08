@@ -55,12 +55,17 @@
   </property>
   <!-- HA -->
   <property>
-    <name>hive.server2.active.passive.ha.enable</name>
+    <name>hive.server2.support.dynamic.service.discovery</name>
     <value>true</value>
   </property>
   <property>
     <name>hive.server2.zookeeper.namespace</name>
-    <value>hiveserver2_zk</value>
+    <value>hiveserver2</value>
+  </property>
+  <property>
+    <name>hive.server2.active.passive.ha.enable</name>
+    <value>false</value>
+    <description>设置为true时不会在zk中创建namespace配置的目录</description>
   </property>
   <property>
     <name>hive.zookeeper.quorum</name>
