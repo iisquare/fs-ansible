@@ -35,7 +35,7 @@ rm -rf /data/clickhouse/
 - 清理注册中心
 ```
 sudo docker-compose exec zookeeper zkCli.sh
-deleteall /clickhouse/
+deleteall /clickhouse
 ```
 
 ### 命令参考

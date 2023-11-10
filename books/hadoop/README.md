@@ -56,6 +56,14 @@ $HADOOP_HOME/sbin/stop-all.sh
 $HADOOP_HOME/bin/hadoop job -h
 $HADOOP_HOME/bin/yarn application -help
 ```
+- 清理
+```
+rm -rf /data/hadoop/*
+rm -rf /$HADOOP_HOME/logs/*
+sudo docker-compose exec zookeeper zkCli.sh
+deleteall /hadoop-ha
+deleteall /yarn-leader-election
+```
 
 ### 服务地址
 - dfs.namenode.http-address:9870

@@ -94,4 +94,10 @@
     <name>dfs.permissions.enabled</name>
     <value>true</value>
   </property>
+
+  <property>
+    <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+    <value>false</value>
+    <description>Datanode denied communication with namenode because hostname cannot be resolved</description>
+  </property>
 </configuration>
